@@ -1,0 +1,133 @@
+---
+title: "canaper: Categorical analysis of neo- and paleo-endemism in R"
+author: "Joel Nitta"
+date: "10/27/2021"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Joel H. Nitta, Shawn W. Laffan, Brent D. Mishler, and Wataru Iwasaki
+
+# Abstract
+
+Biodiversity has typically been quantified using species richness, but this ignores evolutionary history.
+Due to the increasing availability of robust phylogenies, recently methods have been developed that incorporate phylogenetic relationships into quantification of biodiversity.
+CANAPE (categorical analysis of neo- and paleo-endemism) is one such method that can provide insight into the evolutionary processes generating biodiversity.
+The only currently available software implementing CANAPE is Biodiverse, which is written in perl and can be used either through a graphical user interface (GUI) or user-developed scripts.
+However, many researchers, particularly in the fields of ecology and evolutionary biology, use the R programming language to conduct their analyses.
+Here, we provide "canaper", a new R package that provides functions to conduct CANAPE in R.
+This will allow researchers to conduct all analyses from data import and cleaning through CANAPE within R, thereby averting the need to manually import and export data and analysis results between programs.
+Furthermore, canaper implements methods for efficient computation, including parallelization and encoding of community data as sparse matrices.
+
+# Introduction
+
+Quantifying biodiversity is a major goal of ecology.
+Until recently, quantification of biology was done on a purely taxonomic basis: counting the number of species in an area, for example.
+However, as all taxa are related to some degree by descent from a common ancestor, a thorough understanding of biodiversity is only possible by taking into account their evolutionary relationships.
+This became possible with the development of phylogenetic measures of biodiversity, such as phylogenetic diversity (PD) and phylogenetic endemism (PE).
+Such analyses are becoming much more common due to the widespread availability of robust molecular phylogenies.
+
+One recently developed extension of PE is categorical analysis of neo-and paleo-endemism (CANAPE).
+CANAPE uses phylogenetic methods to infer the evolutionary processes that give rise to certain patterns of endemism.
+In theory, endemic areas (areas with high rates of range-limited taxa; or in the phylogenetic sense, range-limited portions of the phylogenetic tree) may arise via two major processes: previously wide-spread lineages may undergo extinction in all but a portion of their range (paleo-endemism), or recently diverged lineages may only occur in a small area (neo-endemism).
+It is also possible that a given area is home to both paleo- and neo-endemic lineages (mixed endemism).
+CANAPE involves analyzing observed patterns of phylogentic endemism in comparison with a null model to infer whether areas are paleo-endemic, neo-endemic, mixed, or lack significantly high endemism.
+CANAPE has been used in \> publications, and is a central component of the field of spatial phylogenetics.
+
+Despite the popularity of CANAPE, it has so far only been implemented in one piece of software, Biodiverse.
+Biodiverse is written in perl and includes a graphical user interface (GUI).
+While Biodiverse is convenient for non-coders because of its GUI, many ecologists and evolutionary biologists use R for their analyses.
+R is particularly well-suited for reproducible workflows and is extremely versatile thanks to the thousands of community-contributed packages that extend its utility.
+Until now, an R user who wanted to conduct CANAPE analysis as part of a broader workflow needed to first clean raw data in R, export it to Biodiverse, conduct PD and PE analyses in Biodiverse, then import the results back into R for further analysis and visualization.
+Besides being error-prone due to its manual nature, this workflow is also not suited to parallel processing, which is needed for large datasets.
+Previously, arallel processing and automation of such analyses was only possible using perl scripts; a set of R scripts is available to call perl from R (<https://github.com/NunzioKnerr/biodiverse_pipeline>), but it is not an R package and is not straightforward to use.
+
+Here, we develop a new R package that implements CANAPE completely in R, canaper.
+We strive to make canaper simple to use and efficient.
+Parallel computing can be enabled with a single line of code.
+Randomization algorithms are provided via the `vegan` package, with comes with \> 30 pre-defined algorithms as well as the option to provide a custom, user-defined algorithm.
+canaper enables researchers using R to conduct CANAPE completely within R.
+canaper has undergone thorough code review through ROpenSci and is verified against a large number of unit tests (100% coverage).
+All results are reproducible by setting the random seed generator in R, in both sequential and parallel computing modes.
+
+# Input data format
+
+## Community data
+
+Community data is typically provided as a data.frame or matrix, with species as columns and sites (communities) as rows.
+In this case, the data must include both row names and column names.
+Community data may also be input as a tibble, in which case site names must be indicated in a dedicated column (default column name "site"), rather than row names since tibbles lack row names.
+Community data may be either presence-absence data (0s or 1s) or abundance data (integers \>= 0).
+However, all calculations of PD and PE only use presence-absence information (i.e., no abundance weighting is used), so identical results will be obtained whether the input data is abundance or abundance that has been converted to presence-absence.
+
+## Phylogeny
+
+The ape R package is used to handle phylogenies, which are stored as lists of the class "phylo".
+Phylogenies can be loaded with the ape::read.tree() function.
+Phylogenies should have no negative branch lengths, but are not required to be fully bifurcating.
+
+# Analysis workflow
+
+The entire CANAPE workflow can be run with a single function, `cpr_rand_test()`.
+However, internally this entails several steps that the user should be aware of as follows.
+
+## Calculate observed values
+
+First, the input phylogeny is scaled to a total length of 1 and observed phylogenetic diversity (PD_obs) and phylogenetic endemism (PE_obs) are calculated.
+Next, an alternative phylogeny is constructed that has non-zero branch lengths each set to an equal value, then rescaled to a total length of 1.
+PD and PE are then calculated on the alternative phylogeny (PD_alt, PE_alt).
+Relative PD and PE, the ratio of PD_obs to PD_alt and PE_obs to PE_alt, are then calculated (RPD, RPE).
+In CANAPE, areas with extremely high or low RPE are designated as neo- or paleo-endemic, respectively.
+However, the statistical significance of any given RPE value cannot be determined from observed values alone.
+
+## Generate random communities
+
+PD (and by extension, PE, RPD, and RPE) is expected to increase with taxon richness, since there is less and less chance of drawing two distantly related taxa without replacement as richness increases.
+To determine the statistical significance of RPE, the observed value is compared to a distribution of values obtained from a set of random communities that each have the same richness as the original data.
+The random communities are generated by a randomization algorithm that modifies the original data.
+
+Since the randomization algorithm determines the reference (expected) value, the choice of randomization algorithm is likely to have a large effect on the results.
+However, there is no single "correct" algorithm, so we have opted to provide the user with a wide range of options.
+canaper uses vegan for community matrix randomizations.
+vegan includes \>30 randomization algorithms, but not all are appropriate for CANAPE.
+Recommended algorithms include `swap` and `curveball` These algorithms preserve column sums (total abundance of each species) and row sums (richness of each site), and both produce results comparable to the randomization algorithm in Biodiverse, rand_structured (see Example).
+
+We have also provided a method for users to provide a custom, user-defined randomization algorithm using the vegan framework.
+This may be appropriate if, for example, the community matrix includes a very wide area and it is desired to restrict randomizations to subsets of the area.
+
+## Calculate summary statistics
+
+Once a randomization algorithm has been selected, random communities are generated for a number of replicates set by the user, and a set of summary statistics are computed.
+These include the mean and standard error of PD, RPD, PE, and RPE of the random communities and comparisons of observed values to the the random communities including standard effect size and rank, which is used to calculate P-value.
+
+To maximize computing efficiency, the individual random communities are not stored in memory.
+Since 100s to 1000s or more random replicates may be required, the memory usage can be quite high for large matrices.
+Rather, as each random community is generated, the summary statistics are computed immediately and stored.
+This way, for any input matrix of size N x M and nr random replicates, where N is number of rows and M is number columns, only nr summary matrices of size N x 1 are stored, rather than nr matrices of size N x M.
+This is a key difference of canaper from biodiverse, and may help with computation of large datasets.
+
+## Categorize endemism
+
+# Major functions
+
+## cpr_rand_comm()
+
+## cpr_rand_test()
+
+## cpr_classify_endem()
+
+# Parallel computing
+
+The future package is used for parallel computing.
+
+# Example: *Acacia* in Australia
+
+# Benchmarks
+
+# Conclusion
