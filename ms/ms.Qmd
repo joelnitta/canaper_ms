@@ -1,15 +1,17 @@
 ---
 title: "canaper: Categorical analysis of neo- and paleo-endemism in R"
-author: "Joel Nitta"
-date: "10/27/2021"
-output: html_document
 bibliography: references.yaml
-editor_options: 
-  markdown: 
-    wrap: sentence
+csl: methods-in-ecology-and-evolution.csl
+format:
+  docx:
+    toc: false
+    number-sections: false
+    highlight-style: github
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -149,7 +151,10 @@ In this sense, the binary randomization algorithms are appropriate for CANAPE.
 
 The following code illustrates use of `cpr_rand_comm()` with a set of example data that comes with CANAPER, the test data from Phylocom:
 
-```{r cpr-rand-comm-demo}
+```{r}
+#| label: cpr-rand-comm-demo
+library(canaper)
+
 data(phylocom)
 
 # The original data includes abundance
@@ -173,7 +178,8 @@ For a full explanation of all output columns, run `?cpr_rand_test()`.
 
 The following code demonstrates usage of `cpr_rand_test()`, using the same example dataset as above:
 
-```{r cpr-rand-comm-demo}
+```{r}
+#| label: cpr-rand-test-demo
 rand_test_results <- cpr_rand_test(
   phylocom$comm, phylocom$phy, null_model = "curveball")
 
@@ -189,7 +195,8 @@ The output is the same dataframe, with the column `endem_type` appended. Values 
 
 The following code demostrates usage of `cpr_classify_endem()` with the output from `cpr_rand_test()`:
 
-```{r cpr-classify-endem-demo}
+```{r}
+#| label: cpr-classify-endem-demo
 canape_results <- cpr_classify_endem(rand_test_results)
 
 # Look at the endem_type column
@@ -208,7 +215,8 @@ The user is advised to consult the `future` website (<https://future.futureverse
 
 The following code demonstrates parallel computing:
 
-```{r cpr-rand-comm-parallel-demo}
+```{r}
+#| label: cpr-rand-comm-parallel-demo
 library(future)
 
 # Specify two cores running in parallel
@@ -230,7 +238,8 @@ The *Acacia* dataset is included with `canaper`.
 The following code demonstrates how to conduct CANAPE analysis on Australian *Acacia* using `canaper`.
 This is quite simple, requiring only three commands (of which `plan()` is only used for increasing speed and is optional):
 
-```{r acacia-demo}
+```{r}
+#| label: acacia-demo
 library(future)
 library(canaper)
 
@@ -253,7 +262,8 @@ acacia_canape <- cpr_classify_endem(acacia_rand_res)
 Rather, we recommend the `ggplot2` package or base R graphics to visualize results.
 Here, we will demonstrate use of the `ggplot2` and `patchwork` packages to visualize the output of `canaper`.
 
-```{r acacia-plot}
+```{r}
+#| label: acacia-plot
 library(patchwork) # for multipart-panels
 library(tidyverse) # includes ggplot2, other packages for data tidying
 
@@ -292,6 +302,11 @@ a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 The above plot can be compared to Figure 3 of @Mishler2014.
 As in @Mishler2014, grid cells with significant endemism are primarily located on the coasts, with mostly non-significant grid-cells in the interior.
 
-
+The color palette used above has been provided in the package as `cpr_endem_cols`, and was selected to be distinguishable regardless of color vision type.
+We recommend using this color palette for maximum accessibility.
 
 # Conclusion
+
+The `canaper` package enables CANAPE completely within R for the first time.
+This will greatly simplify workflows and facilitate reproducibility for researchers studying spatial biodiversity with R.
+Furthermore, `canaper` features efficient computing routines and simple yet flexible implementation of parallel computing, thereby decreasing computation time.
