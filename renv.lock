@@ -58,6 +58,13 @@
       "Repository": "CRAN",
       "Hash": "1c0aa18b97e6aaa17f93b8b866c0ace5"
     },
+    "RefManageR": {
+      "Package": "RefManageR",
+      "Version": "1.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a31abee042741b1fc1bbb546da687f3f"
+    },
     "abind": {
       "Package": "abind",
       "Version": "1.4-5",
@@ -106,6 +113,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "543776ae6848fde2f48ff3816d0628bc"
+    },
+    "base64url": {
+      "Package": "base64url",
+      "Version": "1.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0c54cf3a08cc0e550fbd64ad33166143"
     },
     "betapart": {
       "Package": "betapart",
@@ -172,9 +186,9 @@
       "RemoteUsername": "joelnitta",
       "RemoteRepo": "canaper",
       "RemoteRef": "main",
-      "RemoteSha": "d1a4a1f3c9f5c2cac7d9941a43782e2c0cfcabdf",
+      "RemoteSha": "78313fb76f9daac3ecedebcfb2779b6495ab327d",
       "Remotes": "anthonynorth/roxyglobals",
-      "Hash": "263f5895f3a560b569445a53c210e025"
+      "Hash": "fc5574bfc4db70b490bf3e7e23e70222"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -224,6 +238,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "bb4341986bc8b914f0f0acf2e4a3f2f7"
+    },
+    "conflicted": {
+      "Package": "conflicted",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c6bb5e1ef58f2f1c84f238f55bd2e56a"
     },
     "cpp11": {
       "Package": "cpp11",
@@ -441,6 +462,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "5b45a553fca2217a07b6f9c843304c44"
+    },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "24b224366f9c2e7534d2344d10d59211"
     },
     "highr": {
       "Package": "highr",
@@ -694,6 +722,13 @@
       "Repository": "CRAN",
       "Hash": "01f28d4278f15c76cddbea05899c5d6f"
     },
+    "plyr": {
+      "Package": "plyr",
+      "Version": "1.8.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9c17c6ee41639ebdc1d7266546d3b627"
+    },
     "prettyunits": {
       "Package": "prettyunits",
       "Version": "1.1.1",
@@ -841,6 +876,26 @@
       "Repository": "CRAN",
       "Hash": "0f3eaa1547e2c6880d4de1c043ac6826"
     },
+    "rmdref": {
+      "Package": "rmdref",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "joelnitta",
+      "RemoteRepo": "rmdref",
+      "RemoteRef": "main",
+      "RemoteSha": "f6bf0b1623cf1e6f5c5a51e3c9dafa14d31fa9f3",
+      "Remotes": "anthonynorth/roxyglobals",
+      "Hash": "44be47200c63d5464510b458deb161b4"
+    },
+    "rprojroot": {
+      "Package": "rprojroot",
+      "Version": "2.0.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1de7ab598047a87bba48434ba35d497d"
+    },
     "rstudioapi": {
       "Package": "rstudioapi",
       "Version": "0.14",
@@ -910,6 +965,20 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "b227d13e29222b4574486cfcbde077fa"
+    },
+    "tarchetypes": {
+      "Package": "tarchetypes",
+      "Version": "0.7.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c53b09692ff57646716efc928dad5705"
+    },
+    "targets": {
+      "Package": "targets",
+      "Version": "0.13.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "fd48f11ad10f12db2d201b934fda670f"
     },
     "terra": {
       "Package": "terra",
