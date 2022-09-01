@@ -1,4 +1,85 @@
 references:
+- id: Boettiger2015
+  accessed:
+  - year: 2022
+    month: 9
+    day: 1
+  author:
+  - family: Boettiger
+    given: Carl
+  - family: Chamberlain
+    given: Scott
+  - family: Hart
+    given: Edmund
+  - family: Ram
+    given: Karthik
+  citation-key: Boettiger2015
+  container-title: Journal of Open Research Software
+  container-title-short: JORS
+  DOI: 10.5334/jors.bu
+  ISSN: 2049-9647
+  issue: '1'
+  issued:
+  - year: 2015
+    month: 11
+    day: 16
+  page: '8'
+  source: DOI.org (Crossref)
+  title: 'Building Software, Building Community: Lessons from the rOpenSci Project'
+  title-short: Building Software, Building Community
+  type: article-journal
+  URL: https://openresearchsoftware.metajnl.com/article/10.5334/jors.bu/
+  volume: '3'
+- id: Daru2020a
+  accessed:
+  - year: 2021
+    month: 7
+    day: 1
+  author:
+  - family: Daru
+    given: Barnabas H.
+  - family: Karunarathne
+    given: Piyal
+  - family: Schliep
+    given: Klaus
+  citation-key: Daru2020a
+  container-title: Methods in Ecology and Evolution
+  container-title-short: Methods Ecol. Evol.
+  DOI: 10.1111/2041-210x.13478
+  ISSN: 2041-210X, 2041-210X
+  issue: '11'
+  issued:
+  - year: 2020
+    month: 11
+  language: en
+  page: 1483-1491
+  source: DOI.org (Crossref)
+  title: 'phyloregion: R package for biogeographical regionalization and macroecology'
+  title-short: phyloregion
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/2041-210X.13478
+  volume: '11'
+- id: Diamond1975
+  author:
+  - family: Diamond
+    given: J
+  citation-key: Diamond1975
+  container-title: Ecology and evolution of communities
+  editor:
+  - family: Cody
+    given: M.L.
+  - family: Diamond
+    given: J
+  event-place: Cambridge
+  issued:
+  - year: 1975
+  page: 342-444
+  publisher: Harvard University Press
+  publisher-place: Cambridge
+  title: Assembly of species communities
+  type: chapter
+  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p2004
+  volume: '342'
 - id: Faith1992
   author:
   - family: Faith
@@ -15,6 +96,119 @@ references:
   type: article-journal
   URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1899
   volume: '61'
+- id: Gotelli2001a
+  accessed:
+  - year: 2022
+    month: 9
+    day: 1
+  author:
+  - family: Gotelli
+    given: Nicholas J.
+  citation-key: Gotelli2001a
+  container-title: Global Ecology and Biogeography
+  DOI: 10.1046/j.1466-822X.2001.00249.x
+  ISSN: 1466822X
+  issue: '4'
+  issued:
+  - year: 2001
+    month: 7
+  language: en
+  page: 337-343
+  source: DOI.org (Crossref)
+  title: 'Research frontiers in null model analysis: *Null model analysis*'
+  title-short: Research frontiers in null model analysis
+  type: article-journal
+  URL: http://doi.wiley.com/10.1046/j.1466-822X.2001.00249.x
+  volume: '10'
+- id: Kembel2010
+  accessed:
+  - year: 2021
+    month: 7
+    day: 12
+  author:
+  - family: Kembel
+    given: S. W.
+  - family: Cowan
+    given: P. D.
+  - family: Helmus
+    given: M. R.
+  - family: Cornwell
+    given: W. K.
+  - family: Morlon
+    given: H.
+  - family: Ackerly
+    given: D. D.
+  - family: Blomberg
+    given: S. P.
+  - family: Webb
+    given: C. O.
+  citation-key: Kembel2010
+  container-title: Bioinformatics
+  container-title-short: Bioinformatics
+  DOI: 10.1093/bioinformatics/btq166
+  ISSN: 1367-4803, 1460-2059
+  issue: '11'
+  issued:
+  - year: 2010
+    month: 6
+    day: 1
+  language: en
+  page: 1463-1464
+  source: DOI.org (Crossref)
+  title: 'Picante: R tools for integrating phylogenies and ecology'
+  title-short: Picante
+  type: article-journal
+  URL: https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btq166
+  volume: '26'
+- id: Laffan2010
+  author:
+  - family: Laffan
+    given: Shawn W.
+  - family: Lubarsky
+    given: Eugene
+  - family: Rosauer
+    given: Dan F.
+  citation-key: Laffan2010
+  container-title: Ecography
+  DOI: 10.1111/j.1600-0587.2010.06237.x
+  ISSN: 09067590
+  issue: '4'
+  issued:
+  - year: 2010
+  page: 643-647
+  title: Biodiverse, a tool for the spatial analysis of biological and related diversity
+  type: article-journal
+  volume: '33'
+- id: Lai2019
+  accessed:
+  - year: 2022
+    month: 2
+    day: 16
+  author:
+  - family: Lai
+    given: Jiangshan
+  - family: Lortie
+    given: Christopher J.
+  - family: Muenchen
+    given: Robert A.
+  - family: Yang
+    given: Jian
+  - family: Ma
+    given: Keping
+  citation-key: Lai2019
+  container-title: Ecosphere
+  container-title-short: Ecosphere
+  DOI: 10.1002/ecs2.2567
+  ISSN: 2150-8925, 2150-8925
+  issue: '1'
+  issued:
+  - year: 2019
+    month: 1
+  language: en
+  source: DOI.org (Crossref)
+  title: Evaluating the popularity of R in ecology
+  type: article-journal
+  volume: '10'
 - id: Mishler2014
   author:
   - family: Mishler
@@ -41,3 +235,231 @@ references:
   type: article-journal
   URL: http://www.nature.com/doifinder/10.1038/ncomms5473
   volume: '5'
+- id: Mishler2020
+  accessed:
+  - year: 2021
+    month: 9
+    day: 6
+  author:
+  - family: Mishler
+    given: Brent D.
+  - family: Guralnick
+    given: Robert
+  - family: Soltis
+    given: Pamela S.
+  - family: Smith
+    given: Stephen A.
+  - family: Soltis
+    given: Douglas E.
+  - family: Barve
+    given: Narayani
+  - family: Allen
+    given: Julie M.
+  - family: Laffan
+    given: Shawn W.
+  citation-key: Mishler2020
+  container-title: Journal of Systematics and Evolution
+  container-title-short: J. Syst. Evol.
+  DOI: 10/gg3h86
+  ISSN: 1674-4918, 1759-6831
+  issue: '4'
+  issued:
+  - year: 2020
+    month: 7
+  language: en
+  page: 393-405
+  source: DOI.org (Crossref)
+  title: Spatial phylogenetics of the North American flora
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/jse.12590
+  volume: '58'
+- id: Nitta2022a
+  accessed:
+  - year: 2022
+    month: 6
+    day: 7
+  author:
+  - family: Nitta
+    given: Joel H.
+  - family: Mishler
+    given: Brent D.
+  - family: Iwasaki
+    given: Wataru
+  - family: Ebihara
+    given: Atsushi
+  citation-key: Nitta2022a
+  container-title: American Journal of Botany
+  container-title-short: American J of Botany
+  DOI: 10.1002/ajb2.1848
+  ISSN: 0002-9122, 1537-2197
+  issue: '5'
+  issued:
+  - year: 2022
+    month: 4
+    day: 18
+  language: en
+  license: All rights reserved
+  page: 727-745
+  publisher: Wiley Periodicals LLC on behalf of Botanical Society of America
+  source: DOI.org (Crossref)
+  title: 'Spatial phylogenetics of Japanese ferns: Patterns, processes, and implications
+    for conservation'
+  title-short: Spatial phylogenetics of Japanese ferns
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1002/ajb2.1848
+  volume: '109'
+- id: Okabe2002
+  accessed:
+  - year: 2022
+    month: 9
+    day: 1
+  author:
+  - family: Okabe
+    given: Masataka
+  - family: Ito
+    given: Kei
+  citation-key: Okabe2002
+  container-title: J\*FLY data depository for *Drosophila* researchers
+  issued:
+  - year: 2002
+    month: 11
+    day: 20
+  title: Color Universal Design (CUD) - How to make figures and presentations that
+    are friendly to Colorblind people
+  type: webpage
+  URL: https://jfly.uni-koeln.de/color/
+- id: Oksanen2017
+  author:
+  - family: Oksanen
+    given: Jari
+  - family: Blanchet
+    given: F. Guillaume
+  - family: Friendly
+    given: Michael
+  - family: Kindt
+    given: Roeland
+  - family: Legendre
+    given: Pierre
+  - family: Minchin
+    given: Peter R.
+  - family: O'Hara
+    given: Robert B.
+  - family: Simpson
+    given: Gavin L.
+  - family: Solymos
+    given: Peter
+  - family: Stevens
+    given: M. Henry
+  - family: Wagner
+    given: Helene
+  citation-key: Oksanen2017
+  issued:
+  - year: 2017
+  title: 'vegan: Community ecology package v.2.4-4'
+  type: article-journal
+  URL: http://cran.r-project.org/package=vegan
+- id: Pavoine2020
+  accessed:
+  - year: 2021
+    month: 10
+    day: 27
+  author:
+  - family: Pavoine
+    given: Sandrine
+  citation-key: Pavoine2020
+  container-title: Methods in Ecology and Evolution
+  container-title-short: Methods Ecol Evol
+  DOI: 10/gg2fd8
+  editor:
+  - family: Goslee
+    given: Sarah
+  ISSN: 2041-210X, 2041-210X
+  issue: '9'
+  issued:
+  - year: 2020
+    month: 9
+  language: en
+  page: 1106-1112
+  source: DOI.org (Crossref)
+  title: 'adiv: An <span style="font-variant:small-caps;" smallcaps="smallcaps">r</span>
+    package to analyse biodiversity in ecology'
+  title-short: adiv
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/2041-210X.13430
+  volume: '11'
+- id: Rosauer2009
+  author:
+  - family: Rosauer
+    given: Dan
+  - family: Laffan
+    given: Shawn W.
+  - family: Crisp
+    given: Michael D.
+  - family: Donnellan
+    given: Stephen C.
+  - family: Cook
+    given: Lyn G.
+  citation-key: Rosauer2009
+  container-title: Molecular Ecology
+  DOI: 10.1111/j.1365-294X.2009.04311.x
+  ISSN: 1365294X
+  issue: '19'
+  issued:
+  - year: 2009
+    month: 10
+  page: 4061-4072
+  title: 'Phylogenetic endemism: A new approach for identifying geographical concentrations
+    of evolutionary history'
+  type: article-journal
+  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1890
+  volume: '18'
+- id: Thornhill2017
+  author:
+  - family: Thornhill
+    given: Andrew H.
+  - family: Baldwin
+    given: Bruce G.
+  - family: Freyman
+    given: William A.
+  - family: Nosratinia
+    given: Sonia
+  - family: Kling
+    given: Matthew M.
+  - family: Morueta-Holme
+    given: Naia
+  - family: Madsen
+    given: Thomas P.
+  - family: Ackerly
+    given: David D.
+  - family: Mishler
+    given: Brent D.
+  citation-key: Thornhill2017
+  container-title: BMC Biology
+  DOI: 10.1186/s12915-017-0435-x
+  ISSN: '17417007'
+  issue: '1'
+  issued:
+  - year: 2017
+  page: 1-18
+  PMID: '28450227'
+  title: Spatial phylogenetics of the native California flora
+  type: article-journal
+  volume: '15'
+- id: Tsirogiannis2016
+  author:
+  - family: Tsirogiannis
+    given: Constantinos
+  - family: Sandel
+    given: Brody
+  citation-key: Tsirogiannis2016
+  container-title: Ecography
+  DOI: 10.1111/ecog.01814
+  ISSN: '16000587'
+  issue: '7'
+  issued:
+  - year: 2016
+  page: 709-714
+  title: 'PhyloMeasures: a package for computing phylogenetic biodiversity measures
+    and their statistical moments'
+  type: article-journal
+  volume: '39'
