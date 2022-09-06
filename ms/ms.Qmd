@@ -461,9 +461,23 @@ knitr::kable(comp_table)
 
 # Boxes
 
-**Box 1**: Columns in dataframe produced by `cpr_rand_test()`.
+**Box 1**: Glossary of terms and metrics involved in categorical analysis of neo- and paleo-endemism (CANAPE)
 
-`cpr_rand_test()` calculates four basic metrics: `pd`, phylogenetic diversity (PD) [@Faith1992]; `rpd` [@Mishler2014], relative PD; `pe` [@Rosauer2009], phylogenetic endemism (PE); `rpe` relative PE [@Mishler2014].
+- Community: A co-occurring set of species.
+- Grid cell: One of a set of spatial units each with equal area that together cover a region of interest; each grid cell comprises a community.
+- Community matrix: A 2-dimensional dataset with communties (grid cells) on one axis and species on the other.
+- Phylogenetic diversity (PD): The total branch length (including the root) of a phylogenetic tree that includes all species occurring in a given area (community or grid cell) [@Faith1992].
+- Phylogenetic endemism (PE): PD inversely weighted by the distribution range (i.e., number of grid cells) of a branch [@Rosauer2009].
+- Relative phylogenetic diversity (RPD): The ratio of PD measured on the original tree vs. PD measured on a comparison tree where all branch lengths have been transformed to equal length [@Mishler2014].
+- Relative phylogenetic endemism (RPE): The ratio of PE measured on the original tree vs. PE measured on a comparison tree where all branch lengths have been transformed to equal length [@Mishler2014].
+- Neoendemic: An area with a high concentration of short, range-restricted branchlengths; may be due to processes such as recent speciation (radiation)
+- Paleoendemic: An area with a high concentration of long, range-restricted branchlengths; may be due to processes such as extinction or colonization by distantly related species
+- Mixed endemism: An area with a mixture of short and long, range-restricted branchlengths; may be due to multiple processes
+- Super endemism: An area with mixed endemism that is statistically highly significant
+
+**Box 2**: Columns in dataframe produced by `cpr_rand_test()`.
+
+`cpr_rand_test()` calculates four basic metrics: `pd`, phylogenetic diversity (PD); `rpd` [@Mishler2014], relative PD; `pe` [@Rosauer2009], phylogenetic endemism (PE); `rpe` relative PE [@Mishler2014] (see Box 1 for an explanation of each).
 
 Four each of the four basic metrics, 9 columns are calculated:
 
