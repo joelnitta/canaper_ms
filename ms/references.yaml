@@ -120,6 +120,30 @@ references:
   type: article-journal
   URL: http://doi.wiley.com/10.1046/j.1466-822X.2001.00249.x
   volume: '10'
+- id: Gotelli2003
+  accessed:
+  - year: 2021
+    month: 10
+    day: 21
+  author:
+  - family: Gotelli
+    given: Nicholas J.
+  - family: Entsminger
+    given: Gary L.
+  citation-key: Gotelli2003
+  container-title: Ecology
+  DOI: 10.1890/0012-9658(2003)084[0532:sainma]2.0.co;2
+  ISSN: 0012-9658
+  issue: '2'
+  issued:
+  - year: 2003
+  page: 532-535
+  publisher: Ecological Society of America
+  source: JSTOR
+  title: Swap algorithms in null model analysis
+  type: article-journal
+  URL: https://www.jstor.org/stable/3107907
+  volume: '84'
 - id: Kembel2010
   accessed:
   - year: 2021
@@ -413,6 +437,68 @@ references:
   type: article-journal
   URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1890
   volume: '18'
+- id: Strona2014
+  accessed:
+  - year: 2021
+    month: 10
+    day: 21
+  author:
+  - family: Strona
+    given: Giovanni
+  - family: Nappo
+    given: Domenico
+  - family: Boccacci
+    given: Francesco
+  - family: Fattorini
+    given: Simone
+  - family: San-Miguel-Ayanz
+    given: Jesus
+  citation-key: Strona2014
+  container-title: Nature Communications
+  container-title-short: Nat Commun
+  DOI: 10.1038/ncomms5114
+  ISSN: 2041-1723
+  issue: '1'
+  issued:
+  - year: 2014
+    month: 9
+    day: 22
+  language: en
+  page: '4114'
+  source: DOI.org (Crossref)
+  title: A fast and unbiased procedure to randomize ecological binary matrices with
+    fixed row and column totals
+  type: article-journal
+  URL: http://www.nature.com/articles/ncomms5114
+  volume: '5'
+- id: Strona2018
+  accessed:
+  - year: 2021
+    month: 10
+    day: 21
+  author:
+  - family: Strona
+    given: Giovanni
+  - family: Ulrich
+    given: Werner
+  - family: Gotelli
+    given: Nicholas J.
+  citation-key: Strona2018
+  container-title: Ecology
+  container-title-short: Ecology
+  DOI: 10.1002/ecy.2043
+  ISSN: 0012-9658, 1939-9170
+  issue: '1'
+  issued:
+  - year: 2018
+    month: 1
+  language: en
+  page: 103-115
+  source: DOI.org (Crossref)
+  title: Bi‐dimensional null model analysis of presence‐absence binary matrices
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1002/ecy.2043
+  volume: '99'
 - id: Thornhill2017
   author:
   - family: Thornhill
@@ -463,3 +549,40 @@ references:
     and their statistical moments'
   type: article-journal
   volume: '39'
+- id: Webb2000
+  author:
+  - family: Webb
+    given: Campbell O
+  citation-key: Webb2000
+  container-title: American Naturalist
+  issue: '2'
+  issued:
+  - year: 2000
+  page: 145-155
+  title: 'Exploring the phylogenetic structure of ecological communities: An example
+    for rain forest trees'
+  type: article-journal
+  URL: http://www.google.com/search?client=safari&rls=en-us&q=Exploring+the+phylogenetic+structure+of+ecological+communities:+an+example+for+rain+forest+trees&ie=UTF-8&oe=UTF-8
+    papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1665
+  volume: '156'
+- id: Webb2008
+  author:
+  - family: Webb
+    given: Campbell O
+  - family: Ackerly
+    given: David D
+  - family: Kembel
+    given: Steven W.
+  citation-key: Webb2008
+  container-title: Bioinformatics
+  ISSN: 1460-2059
+  issue: '18'
+  issued:
+  - year: 2008
+    month: 6
+  page: 2098-2100
+  title: 'Phylocom: software for the analysis of phylogenetic community structure
+    and trait evolution'
+  type: article-journal
+  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1666
+  volume: '24'

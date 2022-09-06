@@ -5,3 +5,6 @@
 working
 _targets
 .DS_Store
+*.pdf
+*.docx
+working
