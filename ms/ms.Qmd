@@ -75,7 +75,7 @@ Here, we describe a new R package that implements CANAPE completely in R, `canap
 We strived to make `canaper` simple to use and efficient.
 Parallel computing can be enabled with a single line of code.
 Randomization algorithms are provided via the `vegan` package [@Oksanen2017], which comes with \> 30 pre-defined algorithms as well as the option to provide a custom, user-defined algorithm.
-`canaper` has undergone thorough code review through ROpenSci [@Boettiger2015] and is verified against a large number of unit tests (>98% coverage).
+`canaper` has undergone thorough code review through ROpenSci [@Boettiger2015] and is verified against a large number of unit tests (>95% coverage).
 All results are reproducible by setting the random seed generator in R, in both sequential and parallel computing modes.
 
 # Input data format
@@ -86,7 +86,7 @@ Community data is provided as a `data.frame` or matrix, with species as columns 
 In this case, the data must include both row names and column names.
 Community data may also be input as a tibble, in which case site names must be indicated in a dedicated column (default column name `"site"`), rather than row names since tibbles lack row names.
 Community data may be either presence-absence data (0s or 1s) or abundance data (integers \>= 0).
-However, all calculations of PD and PE only use presence-absence information (i.e., no abundance weighting is used), so identical results will be obtained whether the input data is abundance or abundance that has been converted to presence-absence.
+However, when PD and PE are calculated only presence-absence information is used (i.e., abundance weighting is not used), so identical results will be obtained whether the input data is abundance or abundance that has been converted to presence-absence.
 Community data is typically loaded using `read.csv()`, `readr::read_csv()`, or other functions that can import rectangular data.
 
 ## Phylogeny
@@ -401,58 +401,47 @@ Some of those that are more closely related to `canaper` include the following.
 `adiv` [@Pavoine2020] provides a flexible framework for analyzing alpha and beta diversity of biological communities based on either phylogenetic or trait distances.
 `PhyloMeasures` [@Tsirogiannis2016] implements efficient routines for calculating phylogenetic diversity metrics, but does not appear to be currently maintained and has been removed from CRAN.
 
-# Conclusion
+# Conclusions
 
 The `canaper` package enables CANAPE completely within R for the first time.
 This will simplify workflows and facilitate reproducibility for researchers studying spatial biodiversity with R.
 Furthermore, `canaper` features efficient computing routines and simple yet flexible implementation of parallel computing, thereby decreasing computation time.
 We expect `canaper` will become a major tool in the toolkit of the emerging field of spatial phylogenetics alongside Biodiverse.
 
+# Acknowledgements
+
+This research supported in part by Japan Society for the Promotion of Science (Kakenhi) Grant numbers 16H06279 and 22H04925.
+Members of the Iwasaki Lab (The University of Tokyo) provided helpful comments while the package was in development.
+
+# Conflict of interest
+
+All authors declare no conflict of interest.
+
+# Author contributions
+
+Joel H. Nitta conceived the ideas and designed methodology; Joel H. Nitta and Shawn W. Laffan analysed the data; Joel H. Nitta led the writing of the manuscript.
+All authors contributed critically to the drafts and gave final approval for publication.
+
+# Data availability
+
+All data and code are available in the `canaper` R package, which is distributed by the Comprehensive R Archive Network (CRAN).
+Source code is available on GitHub (<https://github.com/ropensci/canaper>) and Zenodo (<https://doi.org/10.5281/zenodo.5094032>).
+Usage of `canaper` is documented at https://docs.ropensci.org/canaper/.
+The `acacia` dataset was originally published by @Mishler2014. 
+
 # References
 <!-- Insert <div id="refs"></div> to place the refs here instead of at the end -->
 <div id="refs"></div>
 
-# Figures
-```{r}
-#| label: fig-acacia-cpr
-#| fig.height: 8
-#| fig-cap: "Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*."
-#| echo: false
+{{< pagebreak >}}
 
-# Fist do some data wrangling to make the results easier to plot
-# (add lat/long columns)
-acacia_canape <- acacia_canape |>
-  separate(site, c("long", "lat"), sep = ":") |>
-  mutate(across(c(long, lat), parse_number))
+# Figure captions
 
-a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
-  geom_tile() +
-  # cpr_endem_cols is a color palette in canaper for endemism colors
-  scale_fill_manual(values = cpr_endem_cols) +
-  guides(
-    fill = guide_legend(title.position = "top", label.position = "bottom")
-  ) +
-  coord_fixed() +
-  theme(legend.position = "bottom", legend.title = element_blank())
+**@fig-acacia-cpr.** Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*.
+(a) Map of Australia showing grid-cells (communities) colored by endemism type.
+(b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type. This figure reproduces Figure 3 of @Mishler2014.
 
-b <- ggplot(
-  acacia_canape,
-  aes(x = pe_alt_obs, y = pe_obs, color = endem_type)
-) +
-  geom_abline(slope = 1, color = "darkgrey") +
-  geom_point() +
-  scale_color_manual(values = cpr_endem_cols) +
-  labs(
-    x = "Phylogenetic endemism on comparison tree",
-    y = "Phylogenetic endemism on actual tree"
-  ) +
-  theme_bw() +
-  theme(legend.position = "none")
-
-a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
-```
-
-\(a) Map of Australia showing grid-cells (communities) colored by endemism type. (b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type. This figure reproduces Figure 3 of @Mishler2014.
+{{< pagebreak >}}
 
 # Tables
 
@@ -492,6 +481,8 @@ The `phylocom` dataset [@Webb2008] also includes more taxa in the phylogeny than
 
 knitr::kable(comp_table)
 ```
+
+{{< pagebreak >}}
 
 # Boxes
 
@@ -547,3 +538,42 @@ Metrics described in Box 2.
     - If both `pe_obs_p_upper` and `pe_alt_obs_p_upper` are highly significant (*p* < 0.01), then grid-cell is super-endemic.
     - Else grid-cell is mixed-endemic.
 - Else if neither `pe_obs_p_upper` nor `pe_alt_obs_p_upper` are significantly high, grid-cell is non-endemic.
+
+```{r}
+#| label: fig-acacia-cpr
+#| fig.height: 8
+#| fig-cap: ""
+#| echo: false
+
+# Fist do some data wrangling to make the results easier to plot
+# (add lat/long columns)
+acacia_canape <- acacia_canape |>
+  separate(site, c("long", "lat"), sep = ":") |>
+  mutate(across(c(long, lat), parse_number))
+
+a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
+  geom_tile() +
+  # cpr_endem_cols is a color palette in canaper for endemism colors
+  scale_fill_manual(values = cpr_endem_cols) +
+  guides(
+    fill = guide_legend(title.position = "top", label.position = "bottom")
+  ) +
+  coord_fixed() +
+  theme(legend.position = "bottom", legend.title = element_blank())
+
+b <- ggplot(
+  acacia_canape,
+  aes(x = pe_alt_obs, y = pe_obs, color = endem_type)
+) +
+  geom_abline(slope = 1, color = "darkgrey") +
+  geom_point() +
+  scale_color_manual(values = cpr_endem_cols) +
+  labs(
+    x = "Phylogenetic endemism on comparison tree",
+    y = "Phylogenetic endemism on actual tree"
+  ) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+```
