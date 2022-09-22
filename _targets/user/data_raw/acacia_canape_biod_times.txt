@@ -1,0 +1,12 @@
+(base) joelnitta@Joels-MacBook-Pro BiodiverseGUI % date
+Thu Sep 22 16:20:59 JST 2022
+(base) joelnitta@Joels-MacBook-Pro BiodiverseGUI % stat -x BiodiverseGUI.log 
+  File: "BiodiverseGUI.log"
+  Size: 3528921      FileType: Regular File
+  Mode: (0644/-rw-r--r--)         Uid: (  501/joelnitta)  Gid: (   20/   staff)
+Device: 1,5   Inode: 24244515    Links: 1
+Access: Thu Sep 22 16:19:03 2022
+Modify: Thu Sep 22 17:05:24 2022
+Change: Thu Sep 22 17:05:24 2022
+(base) joelnitta@Joels-MacBook-Pro BiodiverseGUI % 
+
