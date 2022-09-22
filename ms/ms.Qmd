@@ -3,6 +3,9 @@ title: "canaper: Categorical analysis of neo- and paleo-endemism in R"
 bibliography: references.yaml
 csl: methods-in-ecology-and-evolution.csl
 highlight-style: github
+crossref: 
+  fig-title: Fig.
+  tbl-title: Table
 format:
   docx: default
   pdf:
@@ -275,6 +278,7 @@ Each is a list with two named elements, `comm` (community matrix, dataframe) and
 ## Analysis with `canaper`
 
 To demonstrate usage with a real dataset, we reproduced the analysis of @Mishler2014, who conducted CANAPE on Australian *Acacia* using Biodiverse.
+All `canaper` analyses were run with `canaper` v`r packageVersion("canaper")` in R v`r R.Version()$major`.`r R.Version()$minor`.
 Conducting CANAPE on Australian *Acacia* using `canaper` is simple, requiring only two commands:
 
 ```{r}
@@ -375,7 +379,7 @@ We recommend using this color palette for maximum accessibility.
 
 ## Comparison with Biodiverse
 
-We also re-ran the *Acacia* analysis using Biodiverse with the same settings as @Mishler2014 (999 replicates of the `rand_structured` null model) and compared the results with those from `canaper`.
+We also re-ran the *Acacia* analysis using Biodiverse v3.1 with the same settings as @Mishler2014 (999 replicates of the `rand_structured` null model) and compared the results with those from `canaper`.
 Importantly, there is no expectation that results between the two should match exactly, for two reasons.
 First, the null model used between the Biodiverse and `canaper` analyses differ (`rand_structured` and `curveball`, respectively).
 `rand_structured` is not currently available in R, but we hope to add this to a future version of `canaper`.
@@ -405,10 +409,10 @@ times <- targets::tar_meta(
   split(.$name)
 ```
 
-Computations were carried out on an iMac (2019) with 16 GB RAM and a 3GHz, six core processor.
+Computations were carried out on an MacBook Pro (2019) with 16 GB RAM and a 1.7 GHz, four core processor.
 Approximate compute times were 1.3 hr for Biodiverse and `r times$acacia_canape_cpr_1$minutes` min for `canaper` (sequential, i.e., non-parallel mode, for both).
 However, when parallel computing was enabled for `canaper` with two cores, compute time dropped to `r times$acacia_canape_cpr$minutes` min (further increases in number of cores did not significantly decrease time).
-This demonstrates that `canaper` can efficiently compute moderately sized datasets with a personal computer.
+This demonstrates that `canaper` can efficiently compute moderately sized datasets with a personal laptop computer.
 
 # Comparison with other R packages
 
@@ -604,5 +608,9 @@ b <- ggplot(
   theme_bw() +
   theme(legend.position = "none")
 
-a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+fig <- a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+
+ggsave(plot = fig, file = "ms/figure_1.pdf", width = 100, height = 200, units = "mm")
+
+fig
 ```
