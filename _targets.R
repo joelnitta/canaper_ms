@@ -44,7 +44,7 @@ tar_plan(
   # Load results from Biodiverse for Acacia
   tar_file_read(
     acacia_biod_res,
-    "_targets/user/data_raw/CANAPE_Acacia/spatial_results_prank.csv",
+    "_targets/user/data_raw/acacia_prank.csv",
     read_csv(!!.x)),
   # Classify endemism types for Biodiverse results
   acacia_canape_biod = classify_biod(acacia_biod_res),
