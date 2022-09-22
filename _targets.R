@@ -15,7 +15,12 @@ tar_plan(
     n_iter = magrittr::raise_to_power(10, 1:7),
     binary = TRUE
   ),
-  # Run CANAPE using canaper (2 cores)
+  # Run CANAPE using canaper (2 cores) on mac laptop
+  mac_laptop_specs = c(
+    "Model Name: MacBook Pro",
+    "Processor Name: Quad-Core Intel Core i7",
+    "Total Number of Cores: 4",
+    "Memory: 16 GB"),
   acacia_canape_cpr = run_canape(
     comm = acacia$comm,
     phy = acacia$phy,
@@ -23,31 +28,30 @@ tar_plan(
     n_reps = 999,
     n_iterations = 100000,
     workers = 2,
-    hardware_info = hardware_specs,
-    # Require this be run on a mac laptop
-    hardware_specs = get_mac_hardware_info(),
-    req_spec = c(
-      "Model Name: MacBook Pro",
-      "Processor Name: Quad-Core Intel Core i7",
-      "Total Number of Cores: 4",
-      "Memory: 16 GB")
+    hardware_info = get_mac_hardware_info(),
+    req_spec = mac_laptop_specs
   ),
-  # Repeat, with only one core for comparison
+  # Repeat, with three cores for comparison
   acacia_canape_cpr_3 = run_canape(
     comm = acacia$comm,
     phy = acacia$phy,
     null_model = "curveball",
     n_reps = 999,
     n_iterations = 100000,
-    workers = 3
+    workers = 3,
+    hardware_info = get_mac_hardware_info(),
+    req_spec = mac_laptop_specs
   ),
-  acacia_canape_cpr_single = run_canape(
+  # Repeat, with one core for comparison
+  acacia_canape_cpr_1 = run_canape(
     comm = acacia$comm,
     phy = acacia$phy,
     null_model = "curveball",
     n_reps = 999,
     n_iterations = 100000,
-    workers = 1
+    workers = 1,
+    hardware_info = get_mac_hardware_info(),
+    req_spec = mac_laptop_specs
   ),
   # Load results from Biodiverse for Acacia
   tar_file_read(

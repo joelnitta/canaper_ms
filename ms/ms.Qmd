@@ -392,8 +392,8 @@ Selection of an appropriate null model is beyond the scope of this paper, but mu
 #| label: build-times
 #| include: false
 
-# Enforce dependency on acacia_canape_cpr_single
-tar_load(acacia_canape_cpr_single,
+# Enforce dependency on acacia_canape_cpr_1
+tar_load(acacia_canape_cpr_1,
   store = here::here("_targets"))
 
 # Load build times as a list
@@ -406,7 +406,7 @@ times <- targets::tar_meta(
 ```
 
 Computations were carried out on an iMac (2019) with 16 GB RAM and a 3GHz, six core processor.
-Approximate compute times were 1.3 hr for Biodiverse and `r times$acacia_canape_cpr_single$minutes` min for `canaper` (sequential, i.e., non-parallel mode, for both).
+Approximate compute times were 1.3 hr for Biodiverse and `r times$acacia_canape_cpr_1$minutes` min for `canaper` (sequential, i.e., non-parallel mode, for both).
 However, when parallel computing was enabled for `canaper` with two cores, compute time dropped to `r times$acacia_canape_cpr$minutes` min (further increases in number of cores did not significantly decrease time).
 This demonstrates that `canaper` can efficiently compute moderately sized datasets with a personal computer.
 
