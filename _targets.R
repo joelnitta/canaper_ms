@@ -53,6 +53,15 @@ tar_plan(
     hardware_info = get_mac_hardware_info(),
     req_spec = mac_laptop_specs
   ),
+  # Run CANAPE using independent swap algorithm
+  acacia_canape_cpr_swap = run_canape(
+    comm = acacia$comm,
+    phy = acacia$phy,
+    null_model = "swap",
+    n_reps = 999,
+    n_iterations = 10000,
+    workers = 2
+  ),
   # Load results from Biodiverse for Acacia
   tar_file_read(
     acacia_biod_res,
