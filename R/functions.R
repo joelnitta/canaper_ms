@@ -1,11 +1,36 @@
+# Get hardware specs for a mac
+get_mac_hardware_info <- function() {
+  system("system_profiler SPHardwareDataType", intern = TRUE)
+}
+
+#' Wrapper for canaper::cpr_rand_test()
+#'
+#' Additional arguments:
+#' @param workers Number of CPUs to use in parallel
+#' @param hardware_info Character vector; output of get_mac_hardware_info(),
+#' includes hardware specs when running on a Mac
+#' @param req_spec Character vector; strings to detect in `hardware_info`;
+#' if any are not detected, the function will fail
 run_canape <- function(
-  comm, phy, null_model, n_reps = 500, n_iterations = 100000, workers = 6) {
+  comm, phy, null_model, n_reps = 500, n_iterations = 100000, workers = 6,
+  hardware_info = NULL, req_spec = NULL) {
   on.exit(plan(sequential))
-  # Specify two cores running in parallel
+  # Check hardware requirements
+  if (!is.null(hardware_info)) {
+    hardware_check <- purrr::map_lgl(
+      req_spec,
+      ~any(stringr::str_detect(hardware_info, fixed(.)))
+    )
+    assertthat::assert_that(
+      all(hardware_check),
+      msg = "Required hardware not detected"
+    )
+  }
+  # Set up parallelization
   plan(multisession, workers = workers)
   # Run randomization test, returning output as tibble (not a dataframe)
   rand_res <- cpr_rand_test(
-    comm, phy,
+    comm = comm, phy = phy,
     null_model = null_model,
     n_reps = n_reps, n_iterations = n_iterations,
     tbl_out = TRUE

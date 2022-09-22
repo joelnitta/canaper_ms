@@ -22,7 +22,15 @@ tar_plan(
     null_model = "curveball",
     n_reps = 999,
     n_iterations = 100000,
-    workers = 2
+    workers = 2,
+    hardware_info = hardware_specs,
+    # Require this be run on a mac laptop
+    hardware_specs = get_mac_hardware_info(),
+    req_spec = c(
+      "Model Name: MacBook Pro",
+      "Processor Name: Quad-Core Intel Core i7",
+      "Total Number of Cores: 4",
+      "Memory: 16 GB")
   ),
   # Repeat, with only one core for comparison
   acacia_canape_cpr_3 = run_canape(
