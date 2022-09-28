@@ -59,21 +59,38 @@ tar_plan(
     phy = acacia$phy,
     null_model = "swap",
     n_reps = 999,
-    n_iterations = 10000,
-    workers = 2
+    n_iterations = 100000,
+    workers = 4
   ),
   # Load results from Biodiverse for Acacia
+  # - p-rank results
   tar_file_read(
-    acacia_biod_res,
-    "_targets/user/data_raw/acacia_prank.csv",
-    read_csv(!!.x)),
+    acacia_biod_res_prank,
+    "_targets/user/data_raw/acacia_canape_prank_spatial_results.csv",
+    read_csv(!!.x)
+  ),
+  # - raw (observed) values
+  tar_file_read(
+    acacia_biod_res_raw,
+    "_targets/user/data_raw/acacia_canape_spatial_results.csv",
+    read_csv(!!.x)
+  ),
   # Classify endemism types for Biodiverse results
-  acacia_canape_biod = classify_biod(acacia_biod_res),
+  acacia_canape_biod = classify_biod(
+    biod_res_raw = acacia_biod_res_raw,
+    biod_res_prank = acacia_biod_res_prank),
   # Compare % agreement between canaper and Biodiverse
   acacia_canape_comp = calc_agree_endem(
     df_1 = acacia_canape_cpr,
     df_2 = acacia_canape_biod
   ),
+  # Calculate time to run Biodiverse
+  tar_file_read(
+    acacia_biod_times_raw,
+    "_targets/user/data_raw/acacia_canape_biod_times.txt",
+    read_lines(!!.x)
+  ),
+  acacia_biod_elapsed_min = extract_biod_elapsed_min(acacia_biod_times_raw),
   # Render MS
   tar_quarto(
     ms_doc,

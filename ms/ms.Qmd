@@ -171,7 +171,7 @@ Centers of mixed endemism can be further divided based on *p*-value; if `pe_obs`
 ## `cpr_rand_comm()`
 
 The `cpr_rand_comm()` function generates a single random community. 
-The first argument, `comm` is a community data frame. 
+The first argument, `comm` is a community dataframe (or matrix). 
 The second, `null_model` is the name of one of the predefined randomization algorithms available in `vegan`.
 The remainder of the arguments are particular to specific types of randomization algorithm.
 `cpr_rand_comm()` is typically not called by the user directly, but is provided to help users select randomization algorithms and settings.
@@ -183,7 +183,7 @@ Either type of algorithm will accept either type of data, but binary algorithms 
 As the calculations of PD and PE in `canaper` do not take into account abundance (i.e., no abundance weighting is used), identical results will be obtained by either using abundance data or converting abundance data to binary before analysis.
 In this sense, the binary randomization algorithms are appropriate for CANAPE.
 
-The following code illustrates use of `cpr_rand_comm()` with a set of example data that comes with CANAPER, the test data from Phylocom [@Webb2008]:
+The following code illustrates use of `cpr_rand_comm()` with a set of example data that comes with `canaper`, the test data from Phylocom [@Webb2008]:
 
 ```{r}
 #| label: cpr-rand-comm-demo
@@ -197,6 +197,65 @@ phylocom$comm
 # Binary null model produces binary output
 cpr_rand_comm(phylocom$comm, "swap", n_iterations = 100)
 ```
+
+## `cpr_iter_sim()`
+
+```{r}
+#| label: acacia-stats
+#| include: false
+data(acacia)
+
+acacia_bin <- acacia$comm
+total_cells <- dim(acacia_bin)[1] * dim(acacia_bin)[2] 
+acacia_bin[acacia_bin > 0] <- 1
+acacia_non_empty <- 1 - (sum(acacia_bin) / total_cells)
+acacia_non_empty <- scales::percent(acacia_non_empty, accuracy = 0.1)
+```
+
+`cpr_iter_sim()` is not required for the CANAPE workflow, but is rather a diagnostic function for use with randomization algorithms that work by exchanging cells of the community matrix such as `swap` [@Gotelli2003] or `curveball` [@Strona2014].
+Each such exchange is known as an "iteration".
+It is generally impossible to know *a-priori* how many iterations are needed to completely randomize a given matrix; this number depends on properties of the matrix and the randomization algorithm.
+Generally, larger matrices with more skew (overabundance of zeros) will require more iterations (ADD CITATION).
+
+`cpr_iter_sim()` helps the user determine the minimum number of iterations needed by conducting successive exchanges and recording the similarity between the original matrix and the randomized matrix at each iteration.
+The similarity values should initially decrease until an approximate minimum is reached; further iterations will only result in noise around this minimum.
+A number slightly larger than the smallest number of iterations needed to reach the approximate minimum value can then be used for randomizing the community.
+The following code demonstrates usage of `cpr_rand_test()` with the *Acacia* dataset [@Mishler2014] that comes with `canaper`.
+The *Acacia* dataset is large (@tbl-datasets) and highly skewed (`r acacia_non_empty` zeros).
+
+```{r}
+#| label: cpr-iter-sim-demo
+data(acacia)
+
+# Conduct up to 100,000 iterations (swaps),
+# recording similarity every 1000 iterations
+iter_sim_res <- cpr_iter_sim(
+  comm = acacia$comm,
+  null_model = "curveball",
+  n_iterations = 100000,
+  thin = 1000
+)
+
+# Inspect the output
+iter_sim_res
+```
+
+It is useful to plot the output to identify the minimum number of iterations needed.
+Here we do so with the `ggplot2` package.
+
+```{r}
+#| label: cpr-iter-sim-plot
+#| fig.height: 8
+#| eval: false
+
+library(ggplot2)
+
+ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
+  geom_line() +
+  labs(x = "Num. iterations", y = "% Similarity")
+```
+
+The plot shows that the community matrix becomes maximally randomized after about 40,000--50,000 iterations (@fig-iter-sim), and that the original matrix and randomized matrix are about 96.5% similar.
 
 ## `cpr_rand_test()`
 
@@ -326,8 +385,9 @@ acacia_canape <- acacia_canape |>
 
 a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
   geom_tile() +
-  # cpr_endem_cols is a color palette in canaper for endemism colors
-  scale_fill_manual(values = cpr_endem_cols) +
+  # use same colors as Misher et al. 2014
+  # (for CVD-safe colors see cpr_endem_cols or cpr_endem_cols_2)
+  scale_fill_manual(values = mishler_endem_cols) +
   guides(
     fill = guide_legend(title.position = "top", label.position = "bottom")
   ) +
@@ -338,7 +398,7 @@ b <- ggplot(
   acacia_canape, aes(x = pe_alt_obs, y = pe_obs, color = endem_type)) +
   geom_abline(slope = 1, color = "darkgrey") +
   geom_point() +
-  scale_color_manual(values = cpr_endem_cols) +
+  scale_color_manual(values = mishler_endem_cols) +
   labs(
     x = "Phylogenetic endemism on comparison tree",
     y = "Phylogenetic endemism on actual tree"
@@ -374,10 +434,33 @@ comp_table <- left_join(
   by = "endem_type")
 ```
 
-The color palette used in @fig-acacia-cpr has been provided in `canaper` as `cpr_endem_cols`, and was selected to be distinguishable regardless of color vision type [@Okabe2002].
-We recommend using this color palette for maximum accessibility.
+The color palette used in @fig-acacia-cpr, `mishler_endem_cols`, is the same as that used in @Mishler2014.
+However, this palette may not be distinguishable to people with color-vision deficiency (CVD).
+Alternate color palettes (e.g., `cpr_endem_cols`) are also vailable that include CVD-safe colors [@Okabe2002].
+Palettes for plotting CANAPE and *p*-rank results can be selected with the  `cpr_make_pal()` function.
 
 ## Comparison with Biodiverse
+
+```{r}
+#| label: tally-cells
+#| include: false
+
+# Tally number of significant cells in canper vs. Biodiverse
+sig_tally <-
+  comp_table %>%
+  mutate(
+    endem_type = str_replace_all(
+      endem_type, "not significant", "not_significant") %>%
+      as.factor() %>%
+      fct_collapse(significant = c("neo", "paleo", "mixed", "super"))
+      ) %>%
+  rename(canaper = n_canaper, biodiverse = n_biodiverse) %>%
+  pivot_longer(names_to = "analysis", values_to = "n_sites", -endem_type) %>%
+  group_by(endem_type, analysis) %>%
+  summarize(n_sites = sum(n_sites), .groups = "drop") %>%
+  split(.$analysis) %>%
+  purrr::map(., ~split(., .$endem_type))
+```
 
 We also re-ran the *Acacia* analysis using Biodiverse v3.1 with the same settings as @Mishler2014 (999 replicates of the `rand_structured` null model) and compared the results with those from `canaper`.
 Importantly, there is no expectation that results between the two should match exactly, for two reasons.
@@ -386,15 +469,17 @@ First, the null model used between the Biodiverse and `canaper` analyses differ 
 Second, the random communities generated in each run will be different, so the exact *p*-values will also be different.
 With a sufficiently high number of random communities, significance (e.g., at the $\alpha = 0.5$ level) is expected to converge, but there may be borderline cases that appear significant in some analyses and non-significant in others.
 
-When we compared endemism type between the `canaper` and Biodiverse CANAPE results for Australian *Acacia*, they agreed in `r p_agree` of grid-cells.
-Differences between the two are mostly due to a greater number of significant sites in the `canaper` results (@tbl-cpr-biod).
-Again, this does not mean that one or the other is more correct; rather, the differences in significant endemism likely reflect differences in the null models that produced the random communities.
-Here, both the `rand_structured` and `curveball` null models preserve total abundance per species and richness of each site (community matrix marginal sums); in that sense, they are relatively conservative null models [@Strona2018], which may explain the relative high agreement between results.
+When we compared endemism type between the `canaper` and Biodiverse CANAPE results for Australian *Acacia*, they agreed in `r p_agree` of grid-cells (@tbl-cpr-biod).
+The total number of significant cells was nearly identical between the two (*n* = `r sig_tally$canaper$significant$n_sites` and `r sig_tally$biodiverse$significant$n_sites` sites, `canaper` and Biodiverse, respectively).
+The `rand_structured` and `curveball` null models both preserve total abundance per species and richness of each site (community matrix marginal sums); in that sense, they are relatively conservative null models [@Strona2018], which may explain the relative high agreement between results.
 Selection of an appropriate null model is beyond the scope of this paper, but must be considered carefully in any community ecological analysis.
 
 ```{r}
 #| label: build-times
 #| include: false
+
+# Load times
+tar_load(acacia_biod_elapsed_min)
 
 # Enforce dependency on acacia_canape_cpr_1
 tar_load(acacia_canape_cpr_1,
@@ -410,7 +495,7 @@ times <- targets::tar_meta(
 ```
 
 Computations were carried out on an MacBook Pro (2019) with 16 GB RAM and a 1.7 GHz, four core processor.
-Approximate compute times were 1.3 hr for Biodiverse and `r times$acacia_canape_cpr_1$minutes` min for `canaper` (sequential, i.e., non-parallel mode, for both).
+Approximate compute times were `r acacia_biod_elapsed_min` min for Biodiverse and `r times$acacia_canape_cpr_1$minutes` min for `canaper` (sequential, i.e., non-parallel mode, for both).
 However, when parallel computing was enabled for `canaper` with two cores, compute time dropped to `r times$acacia_canape_cpr$minutes` min (further increases in number of cores did not significantly decrease time).
 This demonstrates that `canaper` can efficiently compute moderately sized datasets with a personal laptop computer.
 
@@ -462,6 +547,9 @@ The `acacia` dataset was originally published by @Mishler2014.
 {{< pagebreak >}}
 
 # Figure captions
+
+**@fig-iter-sim.** Testing the number of iterations needed to randomize the Australian *Acacia* dataset.
+The *Acacia* dataset [@Mishler2014] was randomized using the `curveball` algorithm for 100,000 iterations and percentage similarity between the original matrix and the randomized matrix was calculated every 1,000 iterations using the `cpr_iter_sim()` function.
 
 **@fig-acacia-cpr.** Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*.
 (a) Map of Australia showing grid-cells (communities) colored by endemism type.
@@ -573,6 +661,21 @@ Not all studies include super-endemism.
 - Else if neither `pe_obs_p_upper` nor `pe_alt_obs_p_upper` are significantly high, grid-cell is non-endemic.
 
 ```{r}
+#| label: fig-iter-sim
+#| fig.height: 4
+#| fig-cap: "Testing the number of iterations needed to randomize the Australian *Acacia* dataset."
+#| echo: false
+
+fig <- ggplot2::ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
+  geom_line() +
+  labs(x = "Num. iterations", y = "% Similarity")
+
+ggsave(plot = fig, file = "ms/figure_1.pdf", width = 150, height = 150, units = "mm")
+
+fig
+```
+
+```{r}
 #| label: fig-acacia-cpr
 #| fig.height: 8
 #| fig-cap: "Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*."
@@ -586,8 +689,9 @@ acacia_canape <- acacia_canape |>
 
 a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
   geom_tile() +
-  # cpr_endem_cols is a color palette in canaper for endemism colors
-  scale_fill_manual(values = cpr_endem_cols) +
+  # use same colors as Misher et al. 2014
+  # (for CVD-safe colors could use cpr_endem_cols or cpr_endem_cols_2)
+  scale_fill_manual(values = mishler_endem_cols) +
   guides(
     fill = guide_legend(title.position = "top", label.position = "bottom")
   ) +
@@ -600,7 +704,7 @@ b <- ggplot(
 ) +
   geom_abline(slope = 1, color = "darkgrey") +
   geom_point() +
-  scale_color_manual(values = cpr_endem_cols) +
+  scale_color_manual(values = mishler_endem_cols) +
   labs(
     x = "Phylogenetic endemism on comparison tree",
     y = "Phylogenetic endemism on actual tree"
@@ -610,7 +714,7 @@ b <- ggplot(
 
 fig <- a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 
-ggsave(plot = fig, file = "ms/figure_1.pdf", width = 100, height = 200, units = "mm")
+ggsave(plot = fig, file = "ms/figure_2.pdf", width = 100, height = 200, units = "mm")
 
 fig
 ```

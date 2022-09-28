@@ -179,16 +179,16 @@
     },
     "canaper": {
       "Package": "canaper",
-      "Version": "0.0.2",
+      "Version": "0.0.3",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "joelnitta",
+      "RemoteUsername": "ropensci",
       "RemoteRepo": "canaper",
       "RemoteRef": "main",
-      "RemoteSha": "78313fb76f9daac3ecedebcfb2779b6495ab327d",
+      "RemoteSha": "c305fcbeda889a84d43b4c6d8b7aca4303f2c5a1",
       "Remotes": "anthonynorth/roxyglobals",
-      "Hash": "fc5574bfc4db70b490bf3e7e23e70222"
+      "Hash": "febaa6c9ce49ddb64b1f7787d368a4cf"
     },
     "cellranger": {
       "Package": "cellranger",
