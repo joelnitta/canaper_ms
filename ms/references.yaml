@@ -80,6 +80,39 @@ references:
   type: chapter
   URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p2004
   volume: '342'
+- id: Ellepola2022
+  accessed:
+  - year: 2022
+    month: 9
+    day: 29
+  author:
+  - family: Ellepola
+    given: Gajaba
+  - family: Pie
+    given: Marcio R.
+  - family: Pethiyagoda
+    given: Rohan
+  - family: Hanken
+    given: James
+  - family: Meegaskumbura
+    given: Madhava
+  citation-key: Ellepola2022
+  container-title: Communications Biology
+  container-title-short: Commun Biol
+  DOI: 10.1038/s42003-022-03292-1
+  ISSN: 2399-3642
+  issue: '1'
+  issued:
+  - year: 2022
+    month: 12
+  language: en
+  page: '347'
+  source: DOI.org (Crossref)
+  title: The role of climate and islands in species diversification and reproductive-mode
+    evolution of Old World tree frogs
+  type: article-journal
+  URL: https://www.nature.com/articles/s42003-022-03292-1
+  volume: '5'
 - id: Faith1992
   author:
   - family: Faith
@@ -144,6 +177,24 @@ references:
   type: article-journal
   URL: https://www.jstor.org/stable/3107907
   volume: '84'
+- id: Gotelli2013a
+  accessed:
+  - year: 2022
+    month: 9
+    day: 29
+  author:
+  - family: Gotelli
+    given: Nicholas J.
+  - family: Ellison
+    given: Aaron M.
+  citation-key: Gotelli2013a
+  issued:
+  - year: 2013
+    month: 6
+    day: 15
+  title: 'EcoSimR: Null Models For Ecology'
+  type: webpage
+  URL: https://www.uvm.edu/~ngotelli/EcoSim/EcoSim.html
 - id: Kembel2010
   accessed:
   - year: 2021
@@ -233,6 +284,71 @@ references:
   title: Evaluating the popularity of R in ecology
   type: article-journal
   volume: '10'
+- id: Lu2022
+  accessed:
+  - year: 2022
+    month: 9
+    day: 6
+  author:
+  - family: Lu
+    given: Limin
+  - family: Zhao
+    given: Lina
+  - family: Hu
+    given: Haihua
+  - family: Liu
+    given: Bing
+  - family: Yang
+    given: Yuchang
+  - family: You
+    given: Yichen
+  - family: Peng
+    given: Danxiao
+  - family: Barrett
+    given: Russell L.
+  - family: Chen
+    given: Zhiduan
+  citation-key: Lu2022
+  container-title: Fundamental Research
+  container-title-short: Fundamental Research
+  DOI: 10.1016/j.fmre.2022.08.008
+  ISSN: '26673258'
+  issued:
+  - year: 2022
+    month: 8
+  language: en
+  page: S2667325822003491
+  source: DOI.org (Crossref)
+  title: A comprehensive evaluation of flowering plant diversity and conservation
+    priority for national park planning in China
+  type: article-journal
+  URL: https://linkinghub.elsevier.com/retrieve/pii/S2667325822003491
+- id: Miklos2004
+  accessed:
+  - year: 2020
+    month: 7
+    day: 21
+  author:
+  - family: Miklós
+    given: I.
+  - family: Podani
+    given: J.
+  citation-key: Miklos2004
+  container-title: Ecology
+  DOI: 10.1890/03-0101
+  ISSN: 1939-9170
+  issue: '1'
+  issued:
+  - year: 2004
+  language: en
+  note: '_eprint: https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1890/03-0101'
+  page: 86-92
+  source: Wiley Online Library
+  title: 'Randomization of presence–absence Matrices: Comments and new algorithms'
+  title-short: Randomization of Presence–Absence Matrices
+  type: article-journal
+  URL: https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/03-0101
+  volume: '85'
 - id: Mishler2014
   author:
   - family: Mishler
@@ -324,7 +440,6 @@ references:
   language: en
   license: All rights reserved
   page: 727-745
-  publisher: Wiley Periodicals LLC on behalf of Botanical Society of America
   source: DOI.org (Crossref)
   title: 'Spatial phylogenetics of Japanese ferns: Patterns, processes, and implications
     for conservation'

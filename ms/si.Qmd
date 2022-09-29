@@ -1,0 +1,73 @@
+---
+title: "canaper: Categorical analysis of neo- and paleo-endemism in R"
+subtitle: "Supporting information"
+bibliography: references.yaml
+csl: methods-in-ecology-and-evolution.csl
+highlight-style: github
+format:
+  pdf:
+    include-in-header:
+      # keep figures from floating away
+      text: |
+        \usepackage{float}
+        \makeatletter\renewcommand*{\fps@figure}{H}\makeatother
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(targets)
+library(tidyverse)
+library(patchwork)
+library(canaper)
+```
+
+```{r}
+#| label: acacia-cpr
+#| fig.height: 8
+#| echo: false
+
+acacia_canape <-
+  tar_read(
+    acacia_canape_cpr,
+    store = here::here("_targets")
+  ) |>
+  separate(site, c("long", "lat"), sep = ":") |>
+  mutate(across(c(long, lat), parse_number))
+
+a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
+  geom_tile() +
+  scale_fill_manual(values = cpr_endem_cols_4) +
+  guides(
+    fill = guide_legend(title.position = "top", label.position = "bottom")
+  ) +
+  coord_fixed() +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    panel.background = element_rect(fill = "white", color = "white"),
+    panel.grid.major = element_line(color = "grey60"),
+    panel.grid.minor = element_blank()
+  )
+
+b <- ggplot(
+  acacia_canape,
+  aes(x = pe_alt_obs, y = pe_obs, color = endem_type)
+) +
+  geom_abline(slope = 1, color = "darkgrey") +
+  geom_point() +
+  scale_color_manual(values = cpr_endem_cols_4) +
+  labs(
+    x = "Phylogenetic endemism on comparison tree",
+    y = "Phylogenetic endemism on actual tree"
+  ) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+```
+
+Fig. S1: Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*, plotted with color vision deficiency (CVD)-safe colors.
+(a) Map of Australia showing grid-cells (communities) colored by endemism type.
+(b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type.

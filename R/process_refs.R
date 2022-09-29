@@ -5,10 +5,13 @@ library(rmdref)
 # Filter YAML references from Zotero library.
 # main_library.yaml has been exported from Zotero
 # like this: file -> "export library" -> "Better CSL YAML"
+# or created as a symlink like this:
+# cd _targets/user/data_raw/
+# ln -s ~/Dropbox/bibliography/main_library.yaml
 filter_refs_yaml(
   rmd_file = "ms/ms.Qmd",
   yaml_in = "_targets/user/data_raw/main_library.yaml",
-  yaml_out = "ms/references.yaml", silent = TRUE)
+  yaml_out = "ms/references.yaml", silent = FALSE)
 
 # Write out 'aux' file with citation keys to make collection in Zotero
 # so reference data are easier to work with.

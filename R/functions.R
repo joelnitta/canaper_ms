@@ -43,35 +43,6 @@ run_canape <- function(
   return(res)
 }
 
-#' Test number of optimal iterations needed for a given null model
-test_iter <- function(comm, null_model, n_iter, binary) {
-  if (isTRUE(binary)) {
-    # binary algorithms produce binary matrices, so convert input
-    # matrix to binary too
-    comm <- as.matrix(comm)
-    comm[comm > 0] <- 1
-  }
-  # Use a tibble to hold the data and run loops
-  tibble::tibble(
-    n_iter = n_iter,
-    # Make one random community for each value of `n_iter`
-    rand_comm = purrr::map(
-      n_iter,
-      ~ canaper::cpr_rand_comm(
-        comm,
-        null_model = null_model, n_iterations = .
-      )
-    ),
-    # Calculate the Pearson correlation (r) between each randomized
-    # matrix and the original matrix by converting
-    # the matrices to vectors
-    corr = map_dbl(
-      rand_comm,
-      ~ cor(c(comm), c(.)) # c() converts a matrix to vector
-    )
-  )
-}
-
 #' Classify endemism types for output from Biodiverse
 #'
 #' Description of Biodiverse output columns and corresponding canaper columns

@@ -7,14 +7,6 @@ source("R/functions.R")
 tar_plan(
   # Load acacia dataset
   acacia = canaper::acacia,
-  # Test optimal number of iterations for making random communities
-  acacia_iter_test_res = test_iter(
-    comm = acacia$comm,
-    null_model = "curveball",
-    # test iterations from 10 to 10^7
-    n_iter = magrittr::raise_to_power(10, 1:7),
-    binary = TRUE
-  ),
   # Run CANAPE using canaper (2 cores) on mac laptop
   mac_laptop_specs = c(
     "Model Name: MacBook Pro",
@@ -84,8 +76,17 @@ tar_plan(
   acacia_biod_elapsed_min = extract_biod_elapsed_min(acacia_biod_times_raw),
   # Render MS
   tar_quarto(
-    ms_doc,
+    ms,
     "ms/ms.Qmd",
+    extra_files = c(
+      "ms/methods-in-ecology-and-evolution.csl",
+      "ms/references.yaml"
+    )
+  ),
+  # Render SI
+  tar_quarto(
+    si,
+    "ms/si.Qmd",
     extra_files = c(
       "ms/methods-in-ecology-and-evolution.csl",
       "ms/references.yaml"

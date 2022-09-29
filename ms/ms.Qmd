@@ -50,8 +50,7 @@ Joel H. Nitta
 Department of Integrated Biosciences, Graduate School of Frontier Sciences, The University of Tokyo, Chiba, Japan  
 joelnitta@gmail.com
 
-Running headline  
-*canaper*
+Running headline: *canaper*
 
 # Abstract
 
@@ -65,7 +64,7 @@ However, many researchers, particularly in the fields of ecology and evolutionar
 `canaper` implements methods for efficient computation, including parallelization and encoding of community data as sparse matrices.
 The interface is designed for maximum simplicity and reproducibility; CANAPE can be conducted with two functions, and parallel computing can be enabled with one line of code.
 
-3. Our case study shows that `canaper` produces equivalent results to Biodiverse and can complete computations on moderately sized datasets quickly (< 15 min to reproduce a canonical study).
+3. Our case study shows that `canaper` produces equivalent results to Biodiverse and can complete computations on moderately sized datasets quickly (< 10 min to reproduce a canonical study).
 
 4. `canaper` allows researchers to conduct all analyses from data import and cleaning through CANAPE within R, thereby averting the need to manually import and export data and analysis results between programs.
 We anticipate `canaper` will become a part of the toolkit for analyzing biodiversity in R.
@@ -113,6 +112,7 @@ Community data may also be input as a tibble, in which case site names must be i
 Community data may be either presence-absence data (0s or 1s) or abundance data (integers \>= 0).
 However, all calculations of PD and PE use only presence-absence information (i.e., no abundance weighting is used), so identical results will be obtained whether the input data is abundance or abundance that has been converted to presence-absence.
 Community data is typically loaded using `read.csv()`, `readr::read_csv()`, or other functions that can import rectangular data.
+The `points2comm()` function of the `phyloregion` package may be used to convert raw occurrence data (e.g., latitude and longitude of species occurrences) to a community matrix [@Daru2020a].
 
 ## Phylogeny
 
@@ -183,7 +183,7 @@ Either type of algorithm will accept either type of data, but binary algorithms 
 As the calculations of PD and PE in `canaper` do not take into account abundance (i.e., no abundance weighting is used), identical results will be obtained by either using abundance data or converting abundance data to binary before analysis.
 In this sense, the binary randomization algorithms are appropriate for CANAPE.
 
-The following code illustrates use of `cpr_rand_comm()` with a set of example data that comes with `canaper`, the test data from Phylocom [@Webb2008]:
+The following code illustrates use of `cpr_rand_comm()` with a set of example data that comes with `canaper`, the test data from Phylocom [@Webb2008].
 
 ```{r}
 #| label: cpr-rand-comm-demo
@@ -215,7 +215,7 @@ acacia_non_empty <- scales::percent(acacia_non_empty, accuracy = 0.1)
 `cpr_iter_sim()` is not required for the CANAPE workflow, but is rather a diagnostic function for use with randomization algorithms that work by exchanging cells of the community matrix such as `swap` [@Gotelli2003] or `curveball` [@Strona2014].
 Each such exchange is known as an "iteration".
 It is generally impossible to know *a-priori* how many iterations are needed to completely randomize a given matrix; this number depends on properties of the matrix and the randomization algorithm.
-Generally, larger matrices with more skew (overabundance of zeros) will require more iterations (ADD CITATION).
+Generally, larger matrices with more skew (overabundance of zeros) will require more iterations [@Miklos2004].
 
 `cpr_iter_sim()` helps the user determine the minimum number of iterations needed by conducting successive exchanges and recording the similarity between the original matrix and the randomized matrix at each iteration.
 The similarity values should initially decrease until an approximate minimum is reached; further iterations will only result in noise around this minimum.
@@ -269,7 +269,7 @@ The output is a dataframe with communities as rows and summary statistics in col
 A large number of summary statistics, including all of those needed to calculate CANAPE, are produced.
 For a full explanation of all output columns, see Box 2 or run `?cpr_rand_test()`.
 
-The following code demonstrates usage of `cpr_rand_test()`, using the same example dataset as above:
+The following code demonstrates usage of `cpr_rand_test()`, using the same example dataset as above.
 
 ```{r}
 #| label: cpr-rand-test-demo
@@ -286,7 +286,7 @@ The `cpr_classify_endem()` function classifies endemism types for the output of 
 The input is a dataframe including the following columns calculated by `cpr_rand_test()`: `pe_obs_p_upper` (upper *p*-value comparing observed PE to random values), `pe_alt_obs_p_upper` (upper *p*-value comparing observed PE on alternate tree to random values), `rpe_obs_p_upper` (upper *p*-value for RPE), and `rpe_obs_p_lower` (lower *p*-value for RPE).
 The output is the same dataframe, with the column `endem_type` appended. Values of `endem_type` include `paleo` (paleoendemic), `neo` (neoendemic), `not significant`, `mixed` (mixed endemism), and `super` (super-endemic).
 
-The following code demonstrates usage of `cpr_classify_endem()` with the output from `cpr_rand_test()` (note that for this small example, not all possible types of `endem_type` are produced):
+The following code demonstrates usage of `cpr_classify_endem()` with the output from `cpr_rand_test()` (note that for this small example, not all possible types of `endem_type` are produced).
 
 ```{r}
 #| label: cpr-classify-endem-demo
@@ -307,7 +307,7 @@ To use parallel computing, no changes are needed for `cpr_rand_test()` etc.
 Rather, `future` is loaded with `library()`, then a parallel back-end is specified with `plan()`.
 The user is advised to consult the `future` website (<https://future.futureverse.org/>) for more information on specifying a parallel backend.
 
-The following code demonstrates parallel computing:
+The following code demonstrates parallel computing.
 
 ```{r}
 #| label: cpr-rand-comm-parallel-demo
@@ -338,7 +338,8 @@ Each is a list with two named elements, `comm` (community matrix, dataframe) and
 
 To demonstrate usage with a real dataset, we reproduced the analysis of @Mishler2014, who conducted CANAPE on Australian *Acacia* using Biodiverse.
 All `canaper` analyses were run with `canaper` v`r packageVersion("canaper")` in R v`r R.Version()$major`.`r R.Version()$minor`.
-Conducting CANAPE on Australian *Acacia* using `canaper` is simple, requiring only two commands:
+We used the `curveball` randomization algorithm with 50,000 iterations, since `cpr_iter_sim()` indicated this was sufficient to randomize the matrix (see "Major Functions").
+Once the randomization algorithm and its settings have been selected, CANAPE can be conducted with just two commands.
 
 ```{r}
 #| label: acacia-load
@@ -358,7 +359,7 @@ acacia_canape <- tar_read(acacia_canape_cpr,
 acacia_rand_res <- cpr_rand_test(
   acacia$comm, acacia$phy,
   null_model = "curveball",
-  n_reps = 999, n_iterations = 100000,
+  n_reps = 999, n_iterations = 50000,
   tbl_out = TRUE
 )
 
@@ -368,7 +369,7 @@ acacia_canape <- cpr_classify_endem(acacia_rand_res)
 
 `canaper` does not include any plotting functions to visualize the results.
 Rather, we recommend the `ggplot2` package or base R graphics to visualize results.
-Here, we will demonstrate use of the `ggplot2` and `patchwork` packages to visualize the output of `canaper` (@fig-acacia-cpr):
+Here, we will demonstrate use of the `ggplot2` and `patchwork` packages to visualize the output of `canaper` (@fig-acacia-cpr).
 
 ```{r}
 #| label: acacia-plot-demo
@@ -392,7 +393,11 @@ a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
     fill = guide_legend(title.position = "top", label.position = "bottom")
   ) +
   coord_fixed() +
-  theme(legend.position = "bottom", legend.title = element_blank())
+  theme(
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    panel.grid.minor = element_blank()
+  )
 
 b <- ggplot(
   acacia_canape, aes(x = pe_alt_obs, y = pe_obs, color = endem_type)) +
@@ -420,7 +425,10 @@ Furthermore, the endemism types largely correspond between the two figures.
 tar_load(c(
   acacia_canape_cpr,
   acacia_canape_biod,
-  acacia_canape_comp),
+  acacia_canape_comp,
+  acacia_biod_elapsed_min,
+  # Enforce dependency on acacia_canape_cpr_1 for calculating times
+  acacia_canape_cpr_1),
   store = here::here("_targets")
 )
 
@@ -437,7 +445,8 @@ comp_table <- left_join(
 The color palette used in @fig-acacia-cpr, `mishler_endem_cols`, is the same as that used in @Mishler2014.
 However, this palette may not be distinguishable to people with color-vision deficiency (CVD).
 Alternate color palettes (e.g., `cpr_endem_cols`) are also vailable that include CVD-safe colors [@Okabe2002].
-Palettes for plotting CANAPE and *p*-rank results can be selected with the  `cpr_make_pal()` function.
+Palettes for plotting CANAPE and *p*-rank results can be selected with the `cpr_make_pal()` function.
+The same plot visualized with CVD-safe colors is available in the online supporting material (Fig. S1).
 
 ## Comparison with Biodiverse
 
@@ -470,20 +479,13 @@ Second, the random communities generated in each run will be different, so the e
 With a sufficiently high number of random communities, significance (e.g., at the $\alpha = 0.5$ level) is expected to converge, but there may be borderline cases that appear significant in some analyses and non-significant in others.
 
 When we compared endemism type between the `canaper` and Biodiverse CANAPE results for Australian *Acacia*, they agreed in `r p_agree` of grid-cells (@tbl-cpr-biod).
-The total number of significant cells was nearly identical between the two (*n* = `r sig_tally$canaper$significant$n_sites` and `r sig_tally$biodiverse$significant$n_sites` sites, `canaper` and Biodiverse, respectively).
+The total number of significant cells was very similar (*n* = `r sig_tally$canaper$significant$n_sites` and `r sig_tally$biodiverse$significant$n_sites` sites, `canaper` and Biodiverse, respectively).
 The `rand_structured` and `curveball` null models both preserve total abundance per species and richness of each site (community matrix marginal sums); in that sense, they are relatively conservative null models [@Strona2018], which may explain the relative high agreement between results.
 Selection of an appropriate null model is beyond the scope of this paper, but must be considered carefully in any community ecological analysis.
 
 ```{r}
 #| label: build-times
 #| include: false
-
-# Load times
-tar_load(acacia_biod_elapsed_min)
-
-# Enforce dependency on acacia_canape_cpr_1
-tar_load(acacia_canape_cpr_1,
-  store = here::here("_targets"))
 
 # Load build times as a list
 times <- targets::tar_meta(
@@ -509,13 +511,16 @@ Some of those that are more closely related to `canaper` include the following.
 `vegan` [@Oksanen2017] performs a wide range of non-phylogenetic community ecology analyses.
 `vegan` includes by far the greatest number of algorithms for generating random communities (> 30) and is used by `canaper`.
 `adiv` [@Pavoine2020] provides a flexible framework for analyzing alpha and beta diversity of biological communities based on either phylogenetic or trait distances.
-`PhyloMeasures` [@Tsirogiannis2016] implements efficient routines for calculating phylogenetic diversity metrics but does not appear to be currently maintained and has been removed from CRAN.
+`PhyloMeasures` [@Tsirogiannis2016] implements efficient routines for calculating phylogenetic diversity metrics.
+`EcoSimR` [@Gotelli2013a] provides randomization algorithms as well as functions for characterizing community matrices and null distributions.
+`PhyloMeasures` and `EcoSimR` have both been removed from CRAN and may not be currently maintained.
 
 # Conclusions
 
 The `canaper` package enables CANAPE completely within R for the first time.
 This will simplify workflows and facilitate reproducibility for researchers studying spatial biodiversity with R.
 Furthermore, `canaper` features efficient computing routines and simple yet flexible implementation of parallel computing, thereby decreasing computation time.
+`canaper` has already been used at least three studies while in development [@Ellepola2022; @Lu2022; @Nitta2022a].
 We expect `canaper` will become a major tool in the toolkit of the emerging field of spatial phylogenetics alongside Biodiverse.
 
 # Acknowledgements
@@ -537,7 +542,7 @@ All authors contributed critically to the drafts and gave final approval for pub
 
 All data and code are available in the `canaper` R package, which is distributed by the Comprehensive R Archive Network (CRAN).
 Source code is available on GitHub (<https://github.com/ropensci/canaper>) and Zenodo (<https://doi.org/10.5281/zenodo.5094032>).
-Usage of `canaper` is documented at https://docs.ropensci.org/canaper/.
+Usage of `canaper` is documented at <https://docs.ropensci.org/canaper/>.
 The `acacia` dataset was originally published by @Mishler2014. 
 
 # References
@@ -577,10 +582,10 @@ phylos <- list(
 )
 
 tibble(
-  Dataset = names(comms),
+  Dataset = names(comms) %>% paste0("`", ., "`"),
   `*n* sites` = map_dbl(comms, nrow),
   `*n* species (community matrix)` = map_dbl(comms, ncol),
-  `*n* species (tree)` = map_dbl(phylos, ape::Ntip)
+  `*n* species (phylogeny)` = map_dbl(phylos, ape::Ntip)
 ) %>%
   knitr::kable()
 ```
@@ -670,7 +675,8 @@ fig <- ggplot2::ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
   geom_line() +
   labs(x = "Num. iterations", y = "% Similarity")
 
-ggsave(plot = fig, file = "ms/figure_1.pdf", width = 150, height = 150, units = "mm")
+ggsave(plot = fig, file = here::here("ms/figure_1.pdf"),
+  width = 150, height = 150, units = "mm")
 
 fig
 ```
@@ -696,7 +702,11 @@ a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
     fill = guide_legend(title.position = "top", label.position = "bottom")
   ) +
   coord_fixed() +
-  theme(legend.position = "bottom", legend.title = element_blank())
+  theme(
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    panel.grid.minor = element_blank()
+  )
 
 b <- ggplot(
   acacia_canape,
@@ -714,7 +724,8 @@ b <- ggplot(
 
 fig <- a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 
-ggsave(plot = fig, file = "ms/figure_2.pdf", width = 100, height = 200, units = "mm")
+ggsave(plot = fig, file = here::here("ms/figure_2.pdf"),
+  width = 100, height = 200, units = "mm")
 
 fig
 ```
