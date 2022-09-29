@@ -26,7 +26,7 @@ tar_plan(
     phy = acacia$phy,
     null_model = "curveball",
     n_reps = 999,
-    n_iterations = 100000,
+    n_iterations = 50000,
     workers = 2,
     hardware_info = get_mac_hardware_info(),
     req_spec = mac_laptop_specs
@@ -37,7 +37,7 @@ tar_plan(
     phy = acacia$phy,
     null_model = "curveball",
     n_reps = 999,
-    n_iterations = 100000,
+    n_iterations = 50000,
     workers = 3,
     hardware_info = get_mac_hardware_info(),
     req_spec = mac_laptop_specs
@@ -48,19 +48,10 @@ tar_plan(
     phy = acacia$phy,
     null_model = "curveball",
     n_reps = 999,
-    n_iterations = 100000,
+    n_iterations = 50000,
     workers = 1,
     hardware_info = get_mac_hardware_info(),
     req_spec = mac_laptop_specs
-  ),
-  # Run CANAPE using independent swap algorithm
-  acacia_canape_cpr_swap = run_canape(
-    comm = acacia$comm,
-    phy = acacia$phy,
-    null_model = "swap",
-    n_reps = 999,
-    n_iterations = 100000,
-    workers = 4
   ),
   # Load results from Biodiverse for Acacia
   # - p-rank results
