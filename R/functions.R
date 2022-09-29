@@ -11,10 +11,12 @@ get_mac_hardware_info <- function() {
 #' includes hardware specs when running on a Mac
 #' @param req_spec Character vector; strings to detect in `hardware_info`;
 #' if any are not detected, the function will fail
+#' @param seed The seed used for set.seed()
 run_canape <- function(
   comm, phy, null_model, n_reps = 500, n_iterations = 100000, workers = 6,
-  hardware_info = NULL, req_spec = NULL) {
+  hardware_info = NULL, req_spec = NULL, seed) {
   on.exit(plan(sequential))
+  set.seed(seed)
   # Check hardware requirements
   if (!is.null(hardware_info)) {
     hardware_check <- purrr::map_lgl(

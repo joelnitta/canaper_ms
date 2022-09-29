@@ -21,7 +21,8 @@ tar_plan(
     n_iterations = 50000,
     workers = 2,
     hardware_info = get_mac_hardware_info(),
-    req_spec = mac_laptop_specs
+    req_spec = mac_laptop_specs,
+    seed = 12345
   ),
   # Repeat, with three cores for comparison
   acacia_canape_cpr_3 = run_canape(
@@ -32,7 +33,8 @@ tar_plan(
     n_iterations = 50000,
     workers = 3,
     hardware_info = get_mac_hardware_info(),
-    req_spec = mac_laptop_specs
+    req_spec = mac_laptop_specs,
+    seed = 12345
   ),
   # Repeat, with one core for comparison
   acacia_canape_cpr_1 = run_canape(
@@ -43,7 +45,8 @@ tar_plan(
     n_iterations = 50000,
     workers = 1,
     hardware_info = get_mac_hardware_info(),
-    req_spec = mac_laptop_specs
+    req_spec = mac_laptop_specs,
+    seed = 12345
   ),
   # Load results from Biodiverse for Acacia
   # - p-rank results

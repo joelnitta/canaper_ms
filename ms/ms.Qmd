@@ -355,6 +355,9 @@ acacia_canape <- tar_read(acacia_canape_cpr,
 #| label: acacia-demo
 #| eval: false
 
+# Set a seed for reproducibility
+set.seed(12345)
+
 # 1. Run randomization test
 acacia_rand_res <- cpr_rand_test(
   acacia$comm, acacia$phy,
