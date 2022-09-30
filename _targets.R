@@ -7,43 +7,44 @@ source("R/functions.R")
 tar_plan(
   # Load acacia dataset
   acacia = canaper::acacia,
-  # Run CANAPE using canaper (2 cores) on mac laptop
+  # Run CANAPE using canaper on mac laptop
+  # test up to three cores
   mac_laptop_specs = c(
     "Model Name: MacBook Pro",
     "Processor Name: Quad-Core Intel Core i7",
     "Total Number of Cores: 4",
     "Memory: 16 GB"),
-  acacia_canape_cpr = run_canape(
+  acacia_rep = 999,
+  acacia_iter = 50000,
+  acacia_canape_cpr_1 = run_canape(
     comm = acacia$comm,
     phy = acacia$phy,
     null_model = "curveball",
-    n_reps = 999,
-    n_iterations = 50000,
+    n_reps = acacia_rep,
+    n_iterations = acacia_iter,
+    workers = 1,
+    hardware_info = get_mac_hardware_info(),
+    req_spec = mac_laptop_specs,
+    seed = 12345
+  ),
+  acacia_canape_cpr_2 = run_canape(
+    comm = acacia$comm,
+    phy = acacia$phy,
+    null_model = "curveball",
+    n_reps = acacia_rep,
+    n_iterations = acacia_iter,
     workers = 2,
     hardware_info = get_mac_hardware_info(),
     req_spec = mac_laptop_specs,
     seed = 12345
   ),
-  # Repeat, with three cores for comparison
   acacia_canape_cpr_3 = run_canape(
     comm = acacia$comm,
     phy = acacia$phy,
     null_model = "curveball",
-    n_reps = 999,
-    n_iterations = 50000,
+    n_reps = acacia_rep,
+    n_iterations = acacia_iter,
     workers = 3,
-    hardware_info = get_mac_hardware_info(),
-    req_spec = mac_laptop_specs,
-    seed = 12345
-  ),
-  # Repeat, with one core for comparison
-  acacia_canape_cpr_1 = run_canape(
-    comm = acacia$comm,
-    phy = acacia$phy,
-    null_model = "curveball",
-    n_reps = 999,
-    n_iterations = 50000,
-    workers = 1,
     hardware_info = get_mac_hardware_info(),
     req_spec = mac_laptop_specs,
     seed = 12345
@@ -67,7 +68,7 @@ tar_plan(
     biod_res_prank = acacia_biod_res_prank),
   # Compare % agreement between canaper and Biodiverse
   acacia_canape_comp = calc_agree_endem(
-    df_1 = acacia_canape_cpr,
+    df_1 = acacia_canape_cpr_1,
     df_2 = acacia_canape_biod
   ),
   # Calculate time to run Biodiverse

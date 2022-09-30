@@ -30,7 +30,7 @@ library(canaper)
 
 acacia_canape <-
   tar_read(
-    acacia_canape_cpr,
+    acacia_canape_cpr_1,
     store = here::here("_targets")
   ) |>
   separate(site, c("long", "lat"), sep = ":") |>

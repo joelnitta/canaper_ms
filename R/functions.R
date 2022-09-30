@@ -13,10 +13,9 @@ get_mac_hardware_info <- function() {
 #' if any are not detected, the function will fail
 #' @param seed The seed used for set.seed()
 run_canape <- function(
-  comm, phy, null_model, n_reps = 500, n_iterations = 100000, workers = 6,
+  comm, phy, null_model, n_reps = 500, n_iterations = 100000, workers = 1,
   hardware_info = NULL, req_spec = NULL, seed) {
-  on.exit(plan(sequential))
-  set.seed(seed)
+  on.exit(future::plan(future::sequential), add = TRUE)
   # Check hardware requirements
   if (!is.null(hardware_info)) {
     hardware_check <- purrr::map_lgl(
@@ -29,7 +28,12 @@ run_canape <- function(
     )
   }
   # Set up parallelization
-  plan(multisession, workers = workers)
+  if (workers > 1) {
+    future::plan(future::multisession, workers = workers)
+  } else {
+    future::plan(future::sequential)
+  }
+  set.seed(seed)
   # Run randomization test, returning output as tibble (not a dataframe)
   rand_res <- cpr_rand_test(
     comm = comm, phy = phy,
@@ -38,7 +42,7 @@ run_canape <- function(
     tbl_out = TRUE
   )
   # Unset parallelization
-  plan(sequential)
+  future::plan(future::sequential)
   # Classify endemism
   res <- cpr_classify_endem(rand_res) %>%
     mutate(site = str_remove_all(site, "'"))

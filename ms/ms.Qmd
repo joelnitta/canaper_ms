@@ -345,9 +345,9 @@ Once the randomization algorithm and its settings have been selected, CANAPE can
 #| label: acacia-load
 #| include: false
 # Load pre-calculated results from targets pipeline
-# - acacia_canape_cpr is Acacia CANAPE results calculated with canaper
+# - acacia_canape_cpr_1 is Acacia CANAPE results calculated with canaper
 # - rename it so we can use it in demo code below
-acacia_canape <- tar_read(acacia_canape_cpr,
+acacia_canape <- tar_read(acacia_canape_cpr_1,
   store = here::here("_targets"))
 ```
 
@@ -426,12 +426,12 @@ Furthermore, the endemism types largely correspond between the two figures.
 
 # Load CANAPE results from canaper and biodiverse
 tar_load(c(
-  acacia_canape_cpr,
   acacia_canape_biod,
   acacia_canape_comp,
   acacia_biod_elapsed_min,
-  # Enforce dependency on acacia_canape_cpr_1 for calculating times
-  acacia_canape_cpr_1),
+  acacia_canape_cpr_1,
+  acacia_canape_cpr_2,
+  acacia_canape_cpr_3),
   store = here::here("_targets")
 )
 
@@ -440,7 +440,7 @@ p_agree <- scales::percent(acacia_canape_comp$p_agree, accuracy = 0.1)
 
 # Make table comparing the two
 comp_table <- left_join(
-  count(acacia_canape_cpr, endem_type, name = "n_canaper"),
+  count(acacia_canape_cpr_1, endem_type, name = "n_canaper"),
   count(acacia_canape_biod, endem_type, name = "n_biodiverse"),
   by = "endem_type")
 ```
@@ -501,7 +501,7 @@ times <- targets::tar_meta(
 
 Computations were carried out on an MacBook Pro (2019) with 16 GB RAM and a 1.7 GHz, four core processor.
 Approximate compute times were `r acacia_biod_elapsed_min` min for Biodiverse and `r times$acacia_canape_cpr_1$minutes` min for `canaper` (sequential, i.e., non-parallel mode, for both).
-However, when parallel computing was enabled for `canaper` with two cores, compute time dropped to `r times$acacia_canape_cpr$minutes` min (further increases in number of cores did not significantly decrease time).
+However, when parallel computing was enabled for `canaper` with two cores, compute time dropped to `r times$acacia_canape_cpr_2$minutes` min (further increases in number of cores did not significantly decrease time).
 This demonstrates that `canaper` can efficiently compute moderately sized datasets with a personal laptop computer.
 
 # Comparison with other R packages
