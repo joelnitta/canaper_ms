@@ -70,4 +70,5 @@ a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 
 Fig. S1: Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*, plotted with color vision deficiency (CVD)-safe colors.
 (a) Map of Australia showing grid-cells (communities) colored by endemism type.
+Latitude and longitude projected into equal area Australian Albers (EPSG:3577) coordinate system; units in m.
 (b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type.

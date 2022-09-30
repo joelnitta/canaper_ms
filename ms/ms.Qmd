@@ -7,7 +7,8 @@ crossref:
   fig-title: Fig.
   tbl-title: Table
 format:
-  docx: default
+  docx:
+    reference-doc: custom-reference.docx
   pdf:
     include-in-header:
       # keep figures from floating away
@@ -99,7 +100,7 @@ A set of R scripts is available to call Biodiverse perl scripts from R (<https:/
 Here, we present a new R package that implements CANAPE completely in R: `canaper`.
 We strived to make `canaper` simple to use and efficient.
 Parallel computing can be enabled with a single line of code.
-`canaper` has undergone thorough code review through ROpenSci [@Boettiger2015] and is verified against a large number of unit tests (>95% coverage).
+`canaper` has passed code review meeting the "silver" standards for statistical software at ROpenSci [@Boettiger2015], and is verified against a large number of unit tests (>99% coverage).
 All results are reproducible by setting the random seed generator in R, in both sequential and parallel computing modes.
 
 # Input data format
@@ -123,7 +124,7 @@ Phylogenies can be loaded with the `ape::read.tree()` function.
 # Analysis workflow
 
 The entire CANAPE workflow can be run with two functions, `cpr_rand_test()` and `cpr_classify_endem()`.
-However, internally this entails several steps that the user should be aware of as follows.
+However, internally this entails several steps that the user should be aware of as follows (@fig-workflow).
 
 ## Calculate observed values
 
@@ -372,7 +373,7 @@ acacia_canape <- cpr_classify_endem(acacia_rand_res)
 
 `canaper` does not include any plotting functions to visualize the results.
 Rather, we recommend the `ggplot2` package or base R graphics to visualize results.
-Here, we will demonstrate use of the `ggplot2` and `patchwork` packages to visualize the output of `canaper` (@fig-acacia-cpr).
+Here, we demonstrate use of the `ggplot2` and `patchwork` packages to visualize the output of `canaper` (@fig-acacia-cpr).
 
 ```{r}
 #| label: acacia-plot-demo
@@ -447,7 +448,7 @@ comp_table <- left_join(
 
 The color palette used in @fig-acacia-cpr, `mishler_endem_cols`, is the same as that used in @Mishler2014.
 However, this palette may not be distinguishable to people with color-vision deficiency (CVD).
-Alternate color palettes (e.g., `cpr_endem_cols`) are also vailable that include CVD-safe colors [@Okabe2002].
+Alternate color palettes (e.g., `cpr_endem_cols`) are also available in `canaper` that include CVD-safe colors [@Okabe2002].
 Palettes for plotting CANAPE and *p*-rank results can be selected with the `cpr_make_pal()` function.
 The same plot visualized with CVD-safe colors is available in the online supporting material (Fig. S1).
 
@@ -516,7 +517,7 @@ Some of those that are more closely related to `canaper` include the following.
 `adiv` [@Pavoine2020] provides a flexible framework for analyzing alpha and beta diversity of biological communities based on either phylogenetic or trait distances.
 `PhyloMeasures` [@Tsirogiannis2016] implements efficient routines for calculating phylogenetic diversity metrics.
 `EcoSimR` [@Gotelli2013a] provides randomization algorithms as well as functions for characterizing community matrices and null distributions.
-`PhyloMeasures` and `EcoSimR` have both been removed from CRAN and may not be currently maintained.
+As of writing, `PhyloMeasures` and `EcoSimR` have both been removed from CRAN and may not be currently maintained.
 
 # Conclusions
 
@@ -544,8 +545,9 @@ All authors contributed critically to the drafts and gave final approval for pub
 # Data availability
 
 All data and code are available in the `canaper` R package, which is distributed by the Comprehensive R Archive Network (CRAN).
-Source code is available on GitHub (<https://github.com/ropensci/canaper>) and Zenodo (<https://doi.org/10.5281/zenodo.5094032>).
+`canaper` source code is available on GitHub (<https://github.com/ropensci/canaper>) and Zenodo (<https://doi.org/10.5281/zenodo.5094032>).
 Usage of `canaper` is documented at <https://docs.ropensci.org/canaper/>.
+Code and data used to run analyses and generate this manuscript available at <https://github.com/joelnitta/canaper_ms>.
 The `acacia` dataset was originally published by @Mishler2014. 
 
 # References
@@ -556,11 +558,20 @@ The `acacia` dataset was originally published by @Mishler2014.
 
 # Figure captions
 
+**@fig-workflow.** `canaper` workflow and functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).
+Input data are a community matrix and phylogeny.
+First, the user selects a randomization algorithm and its settings, with optional assistance from the `cpr_iter_sim()` function.
+Next, a set of random communities are generated, various metrics (e.g., phylogenetic endemism, relative phylogenetic endemism) are calculated for the input community and each random community, and the rank (*p*-value) of each observed metric is compared to those of the random communities by the `cpr_rand_test()` function.
+Finally, endemism types are categorized on the basis of the ranked metrics with the `cpr_classify_endem()` function.
+For details on metrics and classification, see "Analysis Workflow".
+For details on functions, see "Major Functions".
+
 **@fig-iter-sim.** Testing the number of iterations needed to randomize the Australian *Acacia* dataset.
 The *Acacia* dataset [@Mishler2014] was randomized using the `curveball` algorithm for 100,000 iterations and percentage similarity between the original matrix and the randomized matrix was calculated every 1,000 iterations using the `cpr_iter_sim()` function.
 
 **@fig-acacia-cpr.** Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*.
 (a) Map of Australia showing grid-cells (communities) colored by endemism type.
+Latitude and longitude projected into equal area Australian Albers (EPSG:3577) coordinate system [@Butler2007]; units in m.
 (b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type. This figure reproduces Figure 3 of @Mishler2014.
 
 {{< pagebreak >}}
@@ -667,6 +678,10 @@ Not all studies include super-endemism.
     - If both `pe_obs_p_upper` and `pe_alt_obs_p_upper` are highly significant (*p* < 0.01), then grid-cell is super-endemic.
     - Else grid-cell is mixed-endemic.
 - Else if neither `pe_obs_p_upper` nor `pe_alt_obs_p_upper` are significantly high, grid-cell is non-endemic.
+
+{{< pagebreak >}}
+
+![`canaper` workflow and functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE)](workflow.png){#fig-workflow}
 
 ```{r}
 #| label: fig-iter-sim

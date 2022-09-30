@@ -84,7 +84,8 @@ tar_plan(
     "ms/ms.Qmd",
     extra_files = c(
       "ms/methods-in-ecology-and-evolution.csl",
-      "ms/references.yaml"
+      "ms/references.yaml",
+      "ms/custom-reference.docx"
     )
   ),
   # Render SI

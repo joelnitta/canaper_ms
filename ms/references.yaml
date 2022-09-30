@@ -25,11 +25,34 @@ references:
     day: 16
   page: '8'
   source: DOI.org (Crossref)
-  title: 'Building Software, Building Community: Lessons from the rOpenSci Project'
+  title: 'Building Software, building community: Lessons from the rOpenSci Project'
   title-short: Building Software, Building Community
   type: article-journal
   URL: https://openresearchsoftware.metajnl.com/article/10.5334/jors.bu/
   volume: '3'
+- id: Butler2007
+  accessed:
+  - year: 2022
+    month: 9
+    day: 30
+  author:
+  - family: Butler
+    given: Howard
+  - family: Schmidt
+    given: Christopher
+  - family: Springmeyer
+    given: Dane
+  - family: Livni
+    given: Josh
+  citation-key: Butler2007
+  container-title: Spatial Reference
+  issued:
+  - year: 2007
+    month: 1
+    day: 22
+  title: 'GDA94 / Australian Albers: EPSG Projection'
+  type: webpage
+  URL: https://spatialreference.org/ref/epsg/3577/
 - id: Daru2020a
   accessed:
   - year: 2021
@@ -78,7 +101,6 @@ references:
   publisher-place: Cambridge
   title: Assembly of species communities
   type: chapter
-  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p2004
   volume: '342'
 - id: Ellepola2022
   accessed:
@@ -127,7 +149,6 @@ references:
   page: 1-10
   title: Conservation evaluation and phylogenetic diversity
   type: article-journal
-  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1899
   volume: '61'
 - id: Gotelli2001a
   accessed:
@@ -148,7 +169,7 @@ references:
   language: en
   page: 337-343
   source: DOI.org (Crossref)
-  title: 'Research frontiers in null model analysis: *Null model analysis*'
+  title: Research frontiers in null model analysis
   title-short: Research frontiers in null model analysis
   type: article-journal
   URL: http://doi.wiley.com/10.1046/j.1466-822X.2001.00249.x
@@ -344,7 +365,7 @@ references:
   note: '_eprint: https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1890/03-0101'
   page: 86-92
   source: Wiley Online Library
-  title: 'Randomization of presence–absence Matrices: Comments and new algorithms'
+  title: 'Randomization of presence–absence matrices: Comments and new algorithms'
   title-short: Randomization of Presence–Absence Matrices
   type: article-journal
   URL: https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/03-0101
@@ -495,7 +516,7 @@ references:
   issued:
   - year: 2017
   title: 'vegan: Community ecology package v.2.4-4'
-  type: article-journal
+  type: software
   URL: http://cran.r-project.org/package=vegan
 - id: Pavoine2020
   accessed:
@@ -550,7 +571,6 @@ references:
   title: 'Phylogenetic endemism: A new approach for identifying geographical concentrations
     of evolutionary history'
   type: article-journal
-  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1890
   volume: '18'
 - id: Strona2014
   accessed:
@@ -670,6 +690,7 @@ references:
     given: Campbell O
   citation-key: Webb2000
   container-title: American Naturalist
+  DOI: 10.1086/303378
   issue: '2'
   issued:
   - year: 2000
@@ -677,8 +698,6 @@ references:
   title: 'Exploring the phylogenetic structure of ecological communities: An example
     for rain forest trees'
   type: article-journal
-  URL: http://www.google.com/search?client=safari&rls=en-us&q=Exploring+the+phylogenetic+structure+of+ecological+communities:+an+example+for+rain+forest+trees&ie=UTF-8&oe=UTF-8
-    papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1665
   volume: '156'
 - id: Webb2008
   author:
@@ -690,6 +709,7 @@ references:
     given: Steven W.
   citation-key: Webb2008
   container-title: Bioinformatics
+  DOI: 10.1093/bioinformatics/btn358
   ISSN: 1460-2059
   issue: '18'
   issued:
@@ -699,5 +719,4 @@ references:
   title: 'Phylocom: software for the analysis of phylogenetic community structure
     and trait evolution'
   type: article-journal
-  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1666
   volume: '24'
