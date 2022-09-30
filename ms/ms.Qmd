@@ -30,7 +30,7 @@ number <- function(...) {
 }
 ```
 
-Joel H. Nitta^1,\*^, Shawn W. Laffan^2^, Brent D. Mishler^3^, and Wataru Iwasaki^1,4,5,6,7^
+Joel H. Nitta^1,\*^, Shawn W. Laffan^2^, Brent D. Mishler^3^, and Wataru Iwasaki^1,4,5,6,7,8^
 
 ^1^Department of Integrated Biosciences, Graduate School of Frontier Sciences, The University of Tokyo, Chiba, Japan
 
@@ -40,11 +40,13 @@ Joel H. Nitta^1,\*^, Shawn W. Laffan^2^, Brent D. Mishler^3^, and Wataru Iwasaki
 
 ^4^Department of Computational Biology and Medical Sciences, Graduate School of Frontier Sciences, The University of Tokyo, Chiba, Japan
 
-^5^Atmosphere and Ocean Research Institute, The University of Tokyo, Chiba, Japan
+^5^Department of Biological Sciences, Graduate School of Science, The University of Tokyo, Tokyo, Japan
 
-^6^Institute for Quantitative Biosciences, The University of Tokyo, Tokyo, Japan
+^6^Atmosphere and Ocean Research Institute, The University of Tokyo, Chiba, Japan
 
-^7^Collaborative Research Institute for Innovative Microbiology, The University of Tokyo, Tokyo, Japan
+^7^Institute for Quantitative Biosciences, The University of Tokyo, Tokyo, Japan
+
+^8^Collaborative Research Institute for Innovative Microbiology, The University of Tokyo, Tokyo, Japan
 
 \* Corresponding author  
 Joel H. Nitta  
@@ -102,6 +104,21 @@ We strived to make `canaper` simple to use and efficient.
 Parallel computing can be enabled with a single line of code.
 `canaper` has passed code review meeting the "silver" standards for statistical software at ROpenSci [@Boettiger2015], and is verified against a large number of unit tests (>99% coverage).
 All results are reproducible by setting the random seed generator in R, in both sequential and parallel computing modes.
+
+# Installation
+
+The stable version of `canaper` can be installed from CRAN, and the latest development version from r-universe (<https://r-universe.dev/>).
+
+```{r}
+#| label: installation
+#| eval: false
+
+# Stable version
+install.packages("canaper")
+
+# Development version
+install.packages("canaper", repos = "https://ropensci.r-universe.dev")
+```
 
 # Input data format
 
@@ -190,9 +207,11 @@ The following code illustrates use of `cpr_rand_comm()` with a set of example da
 #| label: cpr-rand-comm-demo
 library(canaper)
 
-data(phylocom)
+# Set a seed for reproducibility
+set.seed(12345)
 
 # The original data includes abundance
+data(phylocom)
 phylocom$comm
 
 # Binary null model produces binary output
@@ -204,6 +223,8 @@ cpr_rand_comm(phylocom$comm, "swap", n_iterations = 100)
 ```{r}
 #| label: acacia-stats
 #| include: false
+set.seed(12345)
+
 data(acacia)
 
 acacia_bin <- acacia$comm
@@ -226,6 +247,8 @@ The *Acacia* dataset is large (@tbl-datasets) and highly skewed (`r acacia_non_e
 
 ```{r}
 #| label: cpr-iter-sim-demo
+set.seed(12345)
+
 data(acacia)
 
 # Conduct up to 100,000 iterations (swaps),
@@ -274,6 +297,8 @@ The following code demonstrates usage of `cpr_rand_test()`, using the same examp
 
 ```{r}
 #| label: cpr-rand-test-demo
+set.seed(12345)
+
 rand_test_results <- cpr_rand_test(
   phylocom$comm, phylocom$phy, null_model = "curveball")
 
@@ -314,6 +339,7 @@ The following code demonstrates parallel computing.
 #| label: cpr-rand-comm-parallel-demo
 #| eval: false
 library(future)
+set.seed(12345)
 
 # Specify two cores running in parallel
 plan(multisession, workers = 2)
@@ -390,8 +416,8 @@ acacia_canape <- acacia_canape |>
 
 a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
   geom_tile() +
-  # use same colors as Misher et al. 2014
-  # (for CVD-safe colors see cpr_endem_cols or cpr_endem_cols_2)
+  # Use same colors as Misher et al. 2014
+  # (for CVD-safe colors see cpr_endem_cols)
   scale_fill_manual(values = mishler_endem_cols) +
   guides(
     fill = guide_legend(title.position = "top", label.position = "bottom")
@@ -458,7 +484,7 @@ The same plot visualized with CVD-safe colors is available in the online support
 #| label: tally-cells
 #| include: false
 
-# Tally number of significant cells in canper vs. Biodiverse
+# Tally number of significant cells in canaper vs. Biodiverse
 sig_tally <-
   comp_table %>%
   mutate(
@@ -529,7 +555,7 @@ We expect `canaper` will become a major tool in the toolkit of the emerging fiel
 
 # Acknowledgements
 
-This research supported in part by Japan Society for the Promotion of Science (Kakenhi) Grant numbers 16H06279 and 22H04925.
+This research supported in part by Japan Society for the Promotion of Science (Kakenhi) Grant numbers 16H06279, 22H04925, and 22K15171.
 Members of the Iwasaki Lab (The University of Tokyo) provided helpful comments while the package was in development.
 Luis Osorio and Klaus Schliep reviewed the code as part of submission to ROpenSci.
 
@@ -539,7 +565,7 @@ All authors declare no conflict of interest.
 
 # Author contributions
 
-Joel H. Nitta conceived the ideas and designed methodology; Joel H. Nitta and Shawn W. Laffan analyzed the data; Joel H. Nitta led the writing of the manuscript.
+Joel H. Nitta conceived the ideas and designed methodology; Joel H. Nitta and Shawn W. Laffan analyzed the data; Joel H. Nitta led the writing of the manuscript; Brent D. Mishler edited the manuscript; Wataru Iwasaki provided resources and supervised the study.
 All authors contributed critically to the drafts and gave final approval for publication.
 
 # Data availability
