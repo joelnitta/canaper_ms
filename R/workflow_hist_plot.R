@@ -1,7 +1,5 @@
 # Make a histogram with shaded areas
-
 library(tidyverse)
-library(ggpattern)
 
 # see https://r-graphics.org/recipe-miscgraph-function-shade
 dnorm_limit <- function(x) {
