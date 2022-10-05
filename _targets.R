@@ -8,7 +8,9 @@ tar_plan(
   # Load acacia dataset
   acacia = canaper::acacia,
   # Run CANAPE using canaper on mac laptop
-  # test up to three cores
+  # - must run R/get_mac_hardware_info.R first outside of Docker
+  #   OR, set `hardware_info` and `req_spec` = NULL
+  #   to skip hardware requirements
   mac_laptop_specs = c(
     "Model Name: MacBook Pro",
     "Processor Name: Quad-Core Intel Core i7",
@@ -23,7 +25,7 @@ tar_plan(
     n_reps = acacia_rep,
     n_iterations = acacia_iter,
     workers = 1,
-    hardware_info = get_mac_hardware_info(),
+    hardware_info = readRDS("_targets/user/data_raw/my_hardware_info.RDS"),
     req_spec = mac_laptop_specs,
     seed = 12345
   ),
@@ -34,18 +36,7 @@ tar_plan(
     n_reps = acacia_rep,
     n_iterations = acacia_iter,
     workers = 2,
-    hardware_info = get_mac_hardware_info(),
-    req_spec = mac_laptop_specs,
-    seed = 12345
-  ),
-  acacia_canape_cpr_3 = run_canape(
-    comm = acacia$comm,
-    phy = acacia$phy,
-    null_model = "curveball",
-    n_reps = acacia_rep,
-    n_iterations = acacia_iter,
-    workers = 3,
-    hardware_info = get_mac_hardware_info(),
+    hardware_info = readRDS("_targets/user/data_raw/my_hardware_info.RDS"),
     req_spec = mac_laptop_specs,
     seed = 12345
   ),

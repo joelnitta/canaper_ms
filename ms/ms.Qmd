@@ -458,8 +458,7 @@ tar_load(c(
   acacia_canape_comp,
   acacia_biod_elapsed_min,
   acacia_canape_cpr_1,
-  acacia_canape_cpr_2,
-  acacia_canape_cpr_3),
+  acacia_canape_cpr_2),
   store = here::here("_targets")
 )
 
