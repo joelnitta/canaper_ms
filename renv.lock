@@ -180,14 +180,9 @@
     "canaper": {
       "Package": "canaper",
       "Version": "1.0.0",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "ropensci",
-      "RemoteRepo": "canaper",
-      "RemoteRef": "main",
-      "RemoteSha": "72e33fb044994a62faf293ea82a17279bfbf15a9",
-      "Hash": "c3d3b026ffbdefb6495dd02ece136280"
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "810ce0d0121319cbad9d99c7993d00fe"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -560,6 +555,13 @@
       "Repository": "CRAN",
       "Hash": "3d5108641f47470611a32d0bdf357a72"
     },
+    "later": {
+      "Package": "later",
+      "Version": "1.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7e7b457d7766bc47f2a5f21cc2984f8e"
+    },
     "lattice": {
       "Package": "lattice",
       "Version": "0.20-45",
@@ -664,6 +666,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "6d3bef2e305f55c705c674653c7d7d3d"
+    },
+    "packrat": {
+      "Package": "packrat",
+      "Version": "0.8.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d84055adcb6bb1f4f0ce8c5f235bc328"
     },
     "parallelly": {
       "Package": "parallelly",
@@ -776,6 +785,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "5f919ae5e7f83a6f91dcf2288943370d"
+    },
+    "quarto": {
+      "Package": "quarto",
+      "Version": "1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "298a252816cabed120391c955aced484"
     },
     "randomForest": {
       "Package": "randomForest",
@@ -894,6 +910,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "1de7ab598047a87bba48434ba35d497d"
+    },
+    "rsconnect": {
+      "Package": "rsconnect",
+      "Version": "0.8.27",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "114103fbb50af041e93921ee67db8fa0"
     },
     "rstudioapi": {
       "Package": "rstudioapi",
