@@ -6,6 +6,8 @@ highlight-style: github
 crossref: 
   fig-title: Fig.
   tbl-title: Table
+  fig-prefix: Fig.
+  tbl-prefix: Table
 format:
   docx:
     reference-doc: custom-reference.docx
@@ -103,7 +105,7 @@ A set of R scripts is available to call Biodiverse Perl scripts from R (<https:/
 Here, we present a new R package that implements CANAPE completely in R: `canaper`.
 We strove to make `canaper` simple to use and efficient.
 Parallel computing can be enabled with a single line of code.
-`canaper` has passed code review meeting the "silver" standards for statistical software at ROpenSci [@Boettiger2015], and is verified against a large number of unit tests (>99% coverage).
+`canaper` has passed code review meeting the "silver" standards for statistical software at rOpenSci [@Boettiger2015], and is verified against a large number of unit tests (>99% coverage).
 All results are reproducible by setting the random seed generator in R, in both sequential and parallel computing modes.
 
 # Installation
@@ -169,18 +171,13 @@ This may be appropriate if, for example, the community matrix includes a very wi
 
 ## Calculate summary statistics
 
-Once a randomization algorithm has been selected, random communities are generated for a number of replicates set by the user, and a set of summary statistics are computed (Box 2).
+Once a randomization algorithm has been selected, random communities are generated for a number of replicates set by the user, and a set of summary statistics are computed (Appendix S1).
 Summary statistics include the mean and standard deviation of PD, RPD, PE, and RPE of the random communities and comparisons of observed values to the random communities including standard effect size and rank, which is used to calculate *p*-values.
-
-To minimize memory requirements, the individual random communities are not stored in memory.
-Since hundreds to thousands or more random replicates may be required, the memory usage could be quite high for large matrices if each replicate was stored.
-Rather, as each random community is generated, the summary statistics are computed immediately and stored.
-This way, for any input matrix of size $N \times M$ and $n$ random replicates, where $N$ is number of rows (sites) and $M$ is number columns (species), $n$ summary matrices (data frames) each with $N$ rows and one column per summary statistic are stored, rather than $n$ matrices of size $N \times M$ (the same approach is used in Biodiverse).
 
 ## Categorize endemism
 
 The final step in CANAPE is to categorize endemism as described in @Mishler2014.
-Briefly, this is done by comparing significance values of summary statistics calculated in the previous step (Box 3).
+Briefly, this is done by comparing significance values of summary statistics calculated in the previous step (Appendix S2).
 To be considered significantly endemic, a given grid-cell must first have significantly high `pe_obs` or `pe_alt` or both (one-tailed test).
 If this is true, the grid-cell is classified into one of three non-overlapping categories: if the grid-cell has significantly high or low RPE (two-tailed test), it is considered to be a center of paleo-endemism or neo-endemism, respectively; if RPE is not significant (but `pe_obs`, `pe_alt`, or both are), it is considered a center of mixed endemism.
 Centers of mixed endemism can be further divided based on *p*-value; if `pe_obs` and `pe_alt` and both significant at the $\alpha = 0.01$ level, the grid-cell may be considered a center of super-endemism (but not all studies make this distinction).
@@ -240,7 +237,7 @@ Each such exchange is known as an "iteration".
 It is generally impossible to know *a-priori* how many iterations are needed to completely randomize a given matrix; this number depends on properties of the matrix and the randomization algorithm.
 Generally, larger matrices with more skew (overabundance of zeros) will require more iterations [@Miklos2004].
 
-`cpr_iter_sim()` helps the user determine the minimum number of iterations needed by conducting successive exchanges and recording the similarity between the original matrix and the randomized matrix at each iteration.
+`cpr_iter_sim()` conducts successive exchanges and records the similarity between the original matrix and the randomized matrix at each iteration.
 The similarity values should initially decrease until an approximate minimum is reached; further iterations will only result in noise around this minimum.
 A number slightly larger than the smallest number of iterations needed to reach the approximate minimum value can then be used for randomizing the community.
 The following code demonstrates usage of `cpr_rand_test()` with the *Acacia* dataset [@Mishler2014] that comes with `canaper`.
@@ -292,7 +289,7 @@ While it is beyond the scope of this paper to provide a full discussion of null 
 
 The output is a data frame with communities as rows and summary statistics in columns.
 A large number of summary statistics, including all of those needed to calculate CANAPE, are produced.
-For a full explanation of all output columns, see Box 2 or run `?cpr_rand_test()`.
+For a full explanation of all output columns, see Appendix S1 or run `?cpr_rand_test()`.
 
 The following code demonstrates usage of `cpr_rand_test()`, using the same example dataset as above.
 
@@ -351,14 +348,14 @@ rand_test_results <- cpr_rand_test(
 ```
 
 There will not be a noticeable decrease in computing time since this dataset is so small.
-However, parallelization can greatly decrease computing time for large datasets; more details are available in the "Parallel computing" vignette (<https://joelnitta.github.io/canaper/articles/parallel.html>).
+However, parallelization can greatly decrease computing time for large datasets; more details are available in the "Parallel computing" vignette (<https://docs.ropensci.org/canaper/articles/parallel.html>).
 
 # Datasets
 
 `canaper` comes with three datasets for testing and demonstration (@tbl-datasets).
 Each is a list with two named elements, `comm` (community matrix, data frame) and `phy` (phylogenetic tree, list of class `"phylo"`).
 `acacia` includes data of Australian *Acacia* analyzed by @Mishler2014.
-`phylocom` and `biod_example` are both fictitious datasets compiled for testing software, and were originally published in Phylocom [@Webb2008] and Biodiverse [@Laffan2010], respectively.
+`phylocom` and `biod_example` are fictitious datasets compiled for testing software, and were originally published in Phylocom [@Webb2008] and Biodiverse [@Laffan2010], respectively.
 
 # Example: Australian *Acacia*
 
@@ -539,7 +536,7 @@ Some of those that are more closely related to `canaper` include the following.
 `picante` [@Kembel2010] was one of the first packages to offer calculation of phylogenetic alpha diversity such as MPD, MNTD, and PD [@Webb2000].
 `phyloregion` [@Daru2020a] implements sparse matrix encoding to increase computing efficiency of PD, and is used by `canaper`.
 `vegan` [@Oksanen2017] performs a wide range of non-phylogenetic community ecology analyses.
-`vegan` includes by far the greatest number of algorithms for generating random communities (> 30) and is used by `canaper`.
+`vegan` includes by far the greatest number of algorithms for generating random communities and is used by `canaper`.
 `adiv` [@Pavoine2020] provides a flexible framework for analyzing alpha and beta diversity of biological communities based on either phylogenetic or trait distances.
 `PhyloMeasures` [@Tsirogiannis2016] implements efficient routines for calculating phylogenetic diversity metrics.
 `EcoSimR` [@Gotelli2013a] provides randomization algorithms as well as functions for characterizing community matrices and null distributions.
@@ -557,7 +554,7 @@ We expect `canaper` will become a major tool in the toolkit of the emerging fiel
 
 This research supported in part by Japan Society for the Promotion of Science (Kakenhi) Grant numbers 16H06279, 22H04925, and 22K15171.
 Members of the Iwasaki Lab (The University of Tokyo) provided helpful comments while the package was in development.
-Luis Osorio and Klaus Schliep reviewed the code as part of submission to ROpenSci.
+Luis Osorio and Klaus Schliep reviewed the code as part of submission to rOpenSci.
 
 # Conflict of interest
 
@@ -664,46 +661,6 @@ knitr::kable()
 - Mixed endemic: An area with a mixture of short and long, range-restricted branches; may be due to multiple processes.
 - Super endemic: An area with mixed endemism that is statistically highly significant.
 
-**Box 2**: Columns in data frame produced by `cpr_rand_test()`.
-
-`cpr_rand_test()` calculates six basic metrics for each grid-cell (Box 1):
-
-- `pd`: phylogenetic diversity (PD).
-- `pd_alt`: alternative PD (PD measured on comparison tree with all branch lengths transformed to equal length).
-- `pe`: phylogenetic endemism (PE).
-- `pe_alt`: alternative PE (PE measured on comparison tree).
-- `rpd`: relative PD (ratio of `pd` to `pd_alt`).
-- `rpe`: relative PE (ratio of `pe` to `pe_alt`).
-
-For each of the six basic metrics, nine columns (54 total) are output by `cpr_rand_test()`:
-
-- `*_obs`: Observed value.
-- `*_obs_c_lower`: Count of times observed value was lower than random values.
-- `*_obs_c_upper`: Count of times observed value was higher than random values.
-- `*_obs_p_lower`: Percentage of times observed value was lower than random values.
-- `*_obs_p_upper`: Percentage of times observed value was higher than random values.
-- `*_obs_q`: Count of the non-NA random values used for comparison.
-- `*_obs_z`: Standard effect size (*z*-score).
-- `*_rand_mean`: Mean of the random values.
-- `*_rand_sd`: Standard deviation of the random values.
-
-So for `pd` the output columns would include `pd_obs`, `pd_obs_c_lower`, etc.
-The *p*-values (`*_obs_p_upper`, etc.) are then used to categorize endemism type according to CANAPE (Box 3).
-
-**Box 3**: Criteria for categorical analysis of neo- and paleo-endemism (CANAPE).
-
-Significance assessed at $\alpha = 0.05$ (significant) or $\alpha = 0.01$ (highly significant).
-Metrics described in Box 2.
-Not all studies include super-endemism.
-
-- If either `pe_obs_p_upper` or `pe_alt_obs_p_upper` are significantly high (one-sided test), then look for paleo- or neo-endemism.
-  - If `rpe_obs_p_upper` is significantly high (two-sided test), then grid-cell is paleo-endemic.
-  - Else if `rpe_obs_p_lower` is significantly low (two-sided test), then grid-cell is neo-endemic.
-  - Else there is mixed age endemism, in which case:
-    - If both `pe_obs_p_upper` and `pe_alt_obs_p_upper` are highly significant (*p* < 0.01), then grid-cell is super-endemic.
-    - Else grid-cell is mixed-endemic.
-- Else if neither `pe_obs_p_upper` nor `pe_alt_obs_p_upper` are significantly high, grid-cell is non-endemic.
-
 {{< pagebreak >}}
 
 ![`canaper` workflow and functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE)](workflow.png){#fig-workflow}
@@ -718,7 +675,7 @@ fig <- ggplot2::ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
   geom_line() +
   labs(x = "Num. iterations", y = "% Similarity")
 
-ggsave(plot = fig, file = here::here("ms/figure_1.pdf"),
+ggsave(plot = fig, file = here::here("ms/figure_2.pdf"),
   width = 150, height = 150, units = "mm")
 
 fig
@@ -767,7 +724,7 @@ b <- ggplot(
 
 fig <- a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 
-ggsave(plot = fig, file = here::here("ms/figure_2.pdf"),
+ggsave(plot = fig, file = here::here("ms/figure_3.pdf"),
   width = 100, height = 200, units = "mm")
 
 fig
