@@ -1,7 +1,7 @@
 ---
 title: "canaper: Categorical analysis of neo- and paleo-endemism in R"
 bibliography: references.yaml
-csl: methods-in-ecology-and-evolution.csl
+csl: ecography.csl
 highlight-style: github
 crossref: 
   fig-title: Fig.
@@ -57,24 +57,30 @@ joelnitta@gmail.com
 
 Running headline: *canaper*
 
+{{< pagebreak >}}
+
+# canaper: Categorical analysis of neo- and paleo-endemism in R
+
 # Abstract
 
-1. Biodiversity has typically been quantified using species richness, but this ignores evolutionary history.
+Biodiversity has typically been quantified using species richness, but this ignores evolutionary history.
 Due to the increasing availability of robust phylogenies, methods have been developed that incorporate phylogenetic relationships into quantification of biodiversity.
 CANAPE (categorical analysis of neo- and paleo-endemism) is one such method that can provide insight into the evolutionary processes generating biodiversity.
 The only currently available software implementing CANAPE is Biodiverse, which is written in Perl and can be used either through a graphical user interface (GUI) or user-developed scripts.
 However, many researchers, particularly in the fields of ecology and evolutionary biology, use the R programming language to conduct their analyses.
 
-2. Here, we present `canaper`, a new R package that provides functions to conduct CANAPE in R.
+Here, we present `canaper`, a new R package that provides functions to conduct CANAPE in R.
 `canaper` implements methods for efficient computation, including parallelization and encoding of community data as sparse matrices.
 The interface is designed for maximum simplicity and reproducibility; CANAPE can be conducted with two functions, and parallel computing can be enabled with one line of code.
 
-3. Our case study shows that `canaper` produces equivalent results to Biodiverse and can complete computations on moderately sized datasets quickly (< 10 min to reproduce a canonical study).
+Our case study shows that `canaper` produces equivalent results to Biodiverse and can complete computations on moderately sized datasets quickly (< 10 min to reproduce a canonical study).
 
-4. `canaper` allows researchers to conduct all analyses from data import and cleaning through CANAPE within R, thereby averting the need to manually import and export data and analysis results between programs.
+`canaper` allows researchers to conduct all analyses from data import and cleaning through CANAPE within R, thereby averting the need to manually import and export data and analysis results between programs.
 We anticipate `canaper` will become a part of the toolkit for analyzing biodiversity in R.
 
-Key-words: biodiversity, CANAPE, canaper, endemism, phylogeny, R, spatial phylogenetics
+Keywords: biodiversity, CANAPE, canaper, endemism, phylogeny, R, spatial phylogenetics
+
+{{< pagebreak >}}
 
 # Introduction
 
@@ -550,26 +556,34 @@ Furthermore, `canaper` features efficient computing routines and simple yet flex
 `canaper` has already been used at least three studies while in development [@Ellepola2022; @Lu2022; @Nitta2022a].
 We expect `canaper` will become a major tool in the toolkit of the emerging field of spatial phylogenetics alongside Biodiverse.
 
+<!-- FIXME: for double-blind review leave out of submission text, but add after accepted 
+To cite canaper or acknowledge its use, cite this Software note as follows, substituting the version of the application that you used for 'version 1.0.0':
+
+Nitta, J. H. et al. 2022. canaper: Categorical analysis of neo- and paleo-endemism in R. FIXME: ADD DETAILS HERE (ver 1.0.0) -->
+
+<!-- FIXME: for double-blind review leave out of submission text, but add after accepted 
 # Acknowledgements
 
-This research supported in part by Japan Society for the Promotion of Science (Kakenhi) Grant numbers 16H06279, 22H04925, and 22K15171.
 Members of the Iwasaki Lab (The University of Tokyo) provided helpful comments while the package was in development.
 Luis Osorio and Klaus Schliep reviewed the code as part of submission to rOpenSci.
+-->
 
-# Conflict of interest
+# Funding
 
-All authors declare no conflict of interest.
+This research supported in part by Japan Society for the Promotion of Science (Kakenhi) Grant numbers 16H06279, 22H04925, and 22K15171.
 
 # Author contributions
 
 Joel H. Nitta conceived the ideas and designed methodology; Joel H. Nitta and Shawn W. Laffan analyzed the data; Joel H. Nitta led the writing of the manuscript; Brent D. Mishler edited the manuscript; Wataru Iwasaki provided resources and supervised the study.
 All authors contributed critically to the drafts and gave final approval for publication.
 
-# Data availability
+# Data availability statement
 
 The `canaper` R package is distributed by the Comprehensive R Archive Network (CRAN), with source code available on GitHub (<https://github.com/ropensci/canaper>) and Zenodo (<https://doi.org/10.5281/zenodo.5094032>).
 Usage of `canaper` is documented at <https://docs.ropensci.org/canaper/>.
+<!-- FIXME: for double-blind review leave out of submission text, but add after accepted 
 Code and data used to conduct analyses and generate this manuscript are available at <https://github.com/joelnitta/canaper_ms>, and can be run using the Docker image `joelnitta/canaper_ms` available at <https://hub.docker.com/r/joelnitta/canaper_ms>.
+-->
 The `acacia` dataset was originally published by @Mishler2014.
 
 # References
