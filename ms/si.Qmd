@@ -1,11 +1,12 @@
 ---
 title: "canaper: Categorical analysis of neo- and paleo-endemism in R"
 subtitle: "Supporting information"
-author:
-  - Joel H. Nitta
-  - Shawn W. Laffan
-  - Brent D. Mishler
-  - Wataru Iwasaki
+# FIXME: for double-blind review leave out of submission text, but add after accepted 
+# author:
+#   - Joel H. Nitta
+#   - Shawn W. Laffan
+#   - Brent D. Mishler
+#   - Wataru Iwasaki
 bibliography: references.yaml
 csl: methods-in-ecology-and-evolution.csl
 highlight-style: github
@@ -27,6 +28,58 @@ library(tidyverse)
 library(patchwork)
 library(canaper)
 ```
+
+```{r}
+#| label: iter-sim
+#| fig.height: 4
+#| echo: false
+
+set.seed(12345)
+
+data(acacia)
+
+# Conduct up to 100,000 iterations (swaps),
+# recording similarity every 1000 iterations
+iter_sim_res <- cpr_iter_sim(
+  comm = acacia$comm,
+  null_model = "curveball",
+  n_iterations = 100000,
+  thin = 1000
+)
+
+fig <- ggplot2::ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
+  geom_line() +
+  labs(x = "Num. iterations", y = "% Similarity")
+
+fig
+```
+
+**Fig S1.** Testing the number of iterations needed to randomize the Australian *Acacia* dataset.
+The *Acacia* dataset was randomized using the `curveball` algorithm for 100,000 iterations and percentage similarity between the original matrix and the randomized matrix was calculated every 1,000 iterations using the `cpr_iter_sim()` function.
+
+Code to generate Fig. S1 is as follows.
+
+```{r}
+#| label: cpr-iter-sim-show
+#| eval: false
+library(canaper)
+library(ggplot2)
+
+set.seed(12345)
+
+iter_sim_res <- cpr_iter_sim(
+  comm = acacia$comm,
+  null_model = "curveball",
+  n_iterations = 100000,
+  thin = 1000
+)
+
+ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
+  geom_line() +
+  labs(x = "Num. iterations", y = "% Similarity")
+```
+
+{{< pagebreak >}}
 
 ```{r}
 #| label: acacia-cpr
@@ -73,7 +126,7 @@ b <- ggplot(
 a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 ```
 
-**Fig. S1**: Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*, plotted with color vision deficiency (CVD)-safe colors.
+**Fig. S2**: Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*, plotted with color vision deficiency (CVD)-safe colors (`cpr_endem_cols_4` palette in `canaper`).
 (a) Map of Australia showing grid-cells (communities) colored by endemism type.
 Latitude and longitude projected into equal area Australian Albers (EPSG:3577) coordinate system; units in m.
 (b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type.

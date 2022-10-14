@@ -15,7 +15,7 @@ references:
     given: Karthik
   citation-key: Boettiger2015
   container-title: Journal of Open Research Software
-  container-title-short: JORS
+  container-title-short: J. Open Res. Softw.
   DOI: 10.5334/jors.bu
   ISSN: 2049-9647
   issue: '1'
@@ -45,7 +45,7 @@ references:
   - family: Livni
     given: Josh
   citation-key: Butler2007
-  container-title: Spatial Reference
+  container-title: <https://spatialreference.org/ref/epsg/3577/>
   issued:
   - year: 2007
     month: 1
@@ -87,7 +87,7 @@ references:
   - family: Diamond
     given: J
   citation-key: Diamond1975
-  container-title: Ecology and evolution of communities
+  container-title: Ecology and Evolution of Communities
   editor:
   - family: Cody
     given: M.L.
@@ -119,7 +119,7 @@ references:
   - family: Meegaskumbura
     given: Madhava
   citation-key: Ellepola2022
-  container-title: Communications Biology
+  container-title: Commun. Biol.
   container-title-short: Commun Biol
   DOI: 10.1038/s42003-022-03292-1
   ISSN: 2399-3642
@@ -141,6 +141,7 @@ references:
     given: Daniel P
   citation-key: Faith1992
   container-title: Biological Conservation
+  container-title-short: Biol. Conserv.
   DOI: 10.1016/0006-3207(92)91201-3
   ISSN: 0006-3207
   issue: '1'
@@ -160,6 +161,7 @@ references:
     given: Nicholas J.
   citation-key: Gotelli2001a
   container-title: Global Ecology and Biogeography
+  container-title-short: Glob. Ecol. Biogeogr.
   DOI: 10.1046/j.1466-822X.2001.00249.x
   ISSN: 1466822X
   issue: '4'
@@ -186,6 +188,7 @@ references:
     given: Gary L.
   citation-key: Gotelli2003
   container-title: Ecology
+  container-title-short: Ecology
   DOI: 10.1890/0012-9658(2003)084[0532:sainma]2.0.co;2
   ISSN: 0012-9658
   issue: '2'
@@ -209,6 +212,7 @@ references:
   - family: Ellison
     given: Aaron M.
   citation-key: Gotelli2013a
+  container-title: <https://www.uvm.edu/\~ngotelli/EcoSim/EcoSim.html>
   issued:
   - year: 2013
     month: 6
@@ -266,6 +270,7 @@ references:
     given: Dan F.
   citation-key: Laffan2010
   container-title: Ecography
+  container-title-short: Ecography
   DOI: 10.1111/j.1600-0587.2010.06237.x
   ISSN: 09067590
   issue: '4'
@@ -295,12 +300,12 @@ references:
   container-title: Ecosphere
   container-title-short: Ecosphere
   DOI: 10.1002/ecs2.2567
-  ISSN: 2150-8925, 2150-8925
   issue: '1'
   issued:
   - year: 2019
     month: 1
   language: en
+  page: e02567
   source: DOI.org (Crossref)
   title: Evaluating the popularity of R in ecology
   type: article-journal
@@ -331,14 +336,14 @@ references:
     given: Zhiduan
   citation-key: Lu2022
   container-title: Fundamental Research
-  container-title-short: Fundamental Research
+  container-title-short: Fundam. Res.
   DOI: 10.1016/j.fmre.2022.08.008
   ISSN: '26673258'
   issued:
   - year: 2022
     month: 8
   language: en
-  page: S2667325822003491
+  page: in press
   source: DOI.org (Crossref)
   title: A comprehensive evaluation of flowering plant diversity and conservation
     priority for national park planning in China
@@ -356,6 +361,7 @@ references:
     given: J.
   citation-key: Miklos2004
   container-title: Ecology
+  container-title-short: Ecology
   DOI: 10.1890/03-0101
   ISSN: 1939-9170
   issue: '1'
@@ -386,11 +392,12 @@ references:
     given: Joseph T.
   citation-key: Mishler2014
   container-title: Nature Communications
+  container-title-short: Nat. Commun.
   DOI: 10.1038/ncomms5473
   ISSN: 2041-1723
   issued:
   - year: 2014
-  page: '4473'
+  page: '5473'
   title: Phylogenetic measures of biodiversity and neo- and paleo-endemism in Australian
     *Acacia*
   type: article-journal
@@ -450,7 +457,7 @@ references:
     given: Atsushi
   citation-key: Nitta2022a
   container-title: American Journal of Botany
-  container-title-short: American J of Botany
+  container-title-short: Am. J. Bot.
   DOI: 10.1002/ajb2.1848
   ISSN: 0002-9122, 1537-2197
   issue: '5'
@@ -479,7 +486,7 @@ references:
   - family: Ito
     given: Kei
   citation-key: Okabe2002
-  container-title: J\*FLY data depository for *Drosophila* researchers
+  container-title: <https://jfly.uni-koeln.de/color/>
   issued:
   - year: 2002
     month: 11
@@ -513,10 +520,11 @@ references:
   - family: Wagner
     given: Helene
   citation-key: Oksanen2017
+  container-title: <http://cran.r-project.org/package=vegan>
   issued:
   - year: 2017
   title: 'vegan: Community ecology package v.2.4-4'
-  type: software
+  type: webpage
   URL: http://cran.r-project.org/package=vegan
 - id: Pavoine2020
   accessed:
@@ -528,11 +536,8 @@ references:
     given: Sandrine
   citation-key: Pavoine2020
   container-title: Methods in Ecology and Evolution
-  container-title-short: Methods Ecol Evol
+  container-title-short: Methods Ecol. Evol.
   DOI: 10/gg2fd8
-  editor:
-  - family: Goslee
-    given: Sarah
   ISSN: 2041-210X, 2041-210X
   issue: '9'
   issued:
@@ -561,6 +566,7 @@ references:
     given: Lyn G.
   citation-key: Rosauer2009
   container-title: Molecular Ecology
+  container-title-short: Mol. Ecol.
   DOI: 10.1111/j.1365-294X.2009.04311.x
   ISSN: 1365294X
   issue: '19'
@@ -590,7 +596,7 @@ references:
     given: Jesus
   citation-key: Strona2014
   container-title: Nature Communications
-  container-title-short: Nat Commun
+  container-title-short: Nat. Commun.
   DOI: 10.1038/ncomms5114
   ISSN: 2041-1723
   issue: '1'
@@ -674,6 +680,7 @@ references:
     given: Brody
   citation-key: Tsirogiannis2016
   container-title: Ecography
+  container-title-short: Ecography
   DOI: 10.1111/ecog.01814
   ISSN: '16000587'
   issue: '7'
@@ -690,6 +697,7 @@ references:
     given: Campbell O
   citation-key: Webb2000
   container-title: American Naturalist
+  container-title-short: Am. Nat.
   DOI: 10.1086/303378
   issue: '2'
   issued:
@@ -709,6 +717,7 @@ references:
     given: Steven W.
   citation-key: Webb2008
   container-title: Bioinformatics
+  container-title-short: Bioinformatics
   DOI: 10.1093/bioinformatics/btn358
   ISSN: 1460-2059
   issue: '18'

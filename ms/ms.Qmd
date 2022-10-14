@@ -52,10 +52,7 @@ Joel H. Nitta^1,\*^, Shawn W. Laffan^2^, Brent D. Mishler^3^, and Wataru Iwasaki
 
 \* Corresponding author  
 Joel H. Nitta  
-Department of Integrated Biosciences, Graduate School of Frontier Sciences, The University of Tokyo, Chiba, Japan  
 joelnitta@gmail.com
-
-Running headline: *canaper*
 
 {{< pagebreak >}}
 
@@ -269,21 +266,8 @@ iter_sim_res
 ```
 
 It is useful to plot the output to identify the minimum number of iterations needed.
-Here we do so with the `ggplot2` package.
-
-```{r}
-#| label: cpr-iter-sim-plot
-#| fig.height: 8
-#| eval: false
-
-library(ggplot2)
-
-ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
-  geom_line() +
-  labs(x = "Num. iterations", y = "% Similarity")
-```
-
-The plot shows that the community matrix becomes maximally randomized after about 40,000--50,000 iterations (@fig-iter-sim), and that the original matrix and randomized matrix are about 96.5% similar.
+Code to generate a plot with the `ggplot2` package and its output are shown in the online Supporting Information (Fig. S1).
+The plot shows that the community matrix becomes maximally randomized after about 40,000--50,000 iterations and that the original matrix and randomized matrix are about 96.5% similar.
 
 ## `cpr_rand_test()`
 
@@ -445,7 +429,11 @@ b <- ggplot(
   theme_bw() +
   theme(legend.position = "none")
 
-a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+a + b + plot_layout(ncol = 1) + 
+  plot_annotation(
+    tag_levels = "a",
+    tag_prefix = "(",
+    tag_suffix = ")")
 ```
 
 As in Figure 3 of @Mishler2014, grid-cells with significant endemism are primarily located on the coasts, with mostly non-significant grid-cells in the interior (@fig-acacia-cpr).
@@ -479,7 +467,7 @@ The color palette used in @fig-acacia-cpr, `mishler_endem_cols`, is the same as 
 However, this palette may not be distinguishable to people with color-vision deficiency (CVD).
 Alternate color palettes (e.g., `cpr_endem_cols`) are also available in `canaper` that include CVD-safe colors [@Okabe2002].
 Palettes for plotting CANAPE and *p*-rank results can be selected with the `cpr_make_pal()` function.
-The same plot visualized with CVD-safe colors is available in the online supporting material (Fig. S1).
+The same plot visualized with CVD-safe colors is available in Fig. S2.
 
 ## Comparison with Biodiverse
 
@@ -557,16 +545,15 @@ Furthermore, `canaper` features efficient computing routines and simple yet flex
 We expect `canaper` will become a major tool in the toolkit of the emerging field of spatial phylogenetics alongside Biodiverse.
 
 <!-- FIXME: for double-blind review leave out of submission text, but add after accepted 
+
 To cite canaper or acknowledge its use, cite this Software note as follows, substituting the version of the application that you used for 'version 1.0.0':
 
-Nitta, J. H. et al. 2022. canaper: Categorical analysis of neo- and paleo-endemism in R. FIXME: ADD DETAILS HERE (ver 1.0.0) -->
+Nitta, J. H. et al. 2022. canaper: Categorical analysis of neo- and paleo-endemism in R. FIXME: ADD DETAILS HERE (ver 1.0.0)
 
-<!-- FIXME: for double-blind review leave out of submission text, but add after accepted 
 # Acknowledgements
 
 Members of the Iwasaki Lab (The University of Tokyo) provided helpful comments while the package was in development.
 Luis Osorio and Klaus Schliep reviewed the code as part of submission to rOpenSci.
--->
 
 # Funding
 
@@ -574,8 +561,12 @@ This research supported in part by Japan Society for the Promotion of Science (K
 
 # Author contributions
 
-Joel H. Nitta conceived the ideas and designed methodology; Joel H. Nitta and Shawn W. Laffan analyzed the data; Joel H. Nitta led the writing of the manuscript; Brent D. Mishler edited the manuscript; Wataru Iwasaki provided resources and supervised the study.
-All authors contributed critically to the drafts and gave final approval for publication.
+**Joel H. Nitta**: Conceptualization (Lead); Formal analysis (Lead); Funding acquisition (Supporting); Methodology (Lead); Software (Lead); Visualization (Lead); Writing – original draft (Lead); Writing – review & editing (Equal).
+**Shawn W. Laffan**: Data curation (Lead); Methodology (Supporting); Software (Supporting); Writing – review & editing (Equal).
+**Brent D. Mishler**: Writing – review & editing (Equal).
+**Wataru Iwasaki**: Funding acquisition (Lead); Project administration (Lead); Supervision (Lead); Writing – review & editing (Equal).
+
+-->
 
 # Data availability statement
 
@@ -587,7 +578,8 @@ Code and data used to conduct analyses and generate this manuscript are availabl
 The `acacia` dataset was originally published by @Mishler2014.
 
 # References
-<!-- Insert <div id="refs"></div> to place the refs here instead of at the end -->
+
+<!-- FIXME: for some reason Lai2019 shows up as "in press" -->
 <div id="refs"></div>
 
 {{< pagebreak >}}
@@ -601,9 +593,6 @@ Next, a set of random communities are generated, various metrics (e.g., phylogen
 Finally, endemism types are categorized on the basis of the ranked metrics with the `cpr_classify_endem()` function.
 For details on metrics and classification, see "Analysis Workflow".
 For details on functions, see "Major Functions".
-
-**@fig-iter-sim.** Testing the number of iterations needed to randomize the Australian *Acacia* dataset.
-The *Acacia* dataset [@Mishler2014] was randomized using the `curveball` algorithm for 100,000 iterations and percentage similarity between the original matrix and the randomized matrix was calculated every 1,000 iterations using the `cpr_iter_sim()` function.
 
 **@fig-acacia-cpr.** Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*.
 (a) Map of Australia showing grid-cells (communities) colored by endemism type.
@@ -680,22 +669,6 @@ knitr::kable()
 ![`canaper` workflow and functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE)](workflow.png){#fig-workflow}
 
 ```{r}
-#| label: fig-iter-sim
-#| fig.height: 4
-#| fig-cap: "Testing the number of iterations needed to randomize the Australian *Acacia* dataset."
-#| echo: false
-
-fig <- ggplot2::ggplot(iter_sim_res, aes(x = iteration, y = similarity)) +
-  geom_line() +
-  labs(x = "Num. iterations", y = "% Similarity")
-
-ggsave(plot = fig, file = here::here("ms/figure_2.pdf"),
-  width = 150, height = 150, units = "mm")
-
-fig
-```
-
-```{r}
 #| label: fig-acacia-cpr
 #| fig.height: 8
 #| fig-cap: "Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*."
@@ -736,9 +709,12 @@ b <- ggplot(
   theme_bw() +
   theme(legend.position = "none")
 
-fig <- a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+fig <- a + b + plot_layout(ncol = 1) + plot_annotation(
+  tag_levels = "a",
+  tag_prefix = "(",
+  tag_suffix = ")")
 
-ggsave(plot = fig, file = here::here("ms/figure_3.pdf"),
+ggsave(plot = fig, file = here::here("ms/figure_2.pdf"),
   width = 100, height = 200, units = "mm")
 
 fig
