@@ -82,7 +82,7 @@ Keywords: biodiversity, CANAPE, canaper, endemism, phylogeny, R, spatial phyloge
 # Introduction
 
 Quantifying biodiversity is a major goal of ecology.
-Quantification of biodiversity is often done on a purely taxonomic basis: counting the number of species in an area [e.g., @Diamond1975].
+The simplest and most commonly used biodiversity metric is species richness [e.g., @Diamond1975].
 However, as all taxa are related to some degree by descent from a common ancestor, a thorough understanding of biodiversity is only possible by considering their evolutionary relationships.
 This became possible with the development of phylogenetic measures of biodiversity, such as phylogenetic diversity [PD\; @Faith1992] and phylogenetic endemism [PE\; @Rosauer2009] (Box 1).
 Such analyses are becoming much more common due to the widespread availability of robust molecular phylogenies and large spatial datasets [e.g., @Mishler2020; @Nitta2022a; @Thornhill2017].
@@ -134,7 +134,7 @@ Community data is provided as a data frame or matrix, with species as columns an
 In this case, the data must include both row names and column names.
 Community data may also be input as a tibble, in which case site names must be indicated in a dedicated column (default column name `"site"`), rather than row names since tibbles lack row names.
 Community data may be either presence-absence data (0s or 1s) or abundance data (integers \>= 0).
-However, all calculations of PD and PE use only presence-absence information (i.e., no abundance weighting is used), so identical results will be obtained whether the input data is abundance or abundance that has been converted to presence-absence.
+However, calculations of PD and PE for CANAPE use only presence-absence information (i.e., no abundance weighting is used), so identical results will be obtained whether the input data is abundance or abundance that has been converted to presence-absence.
 Community data is typically loaded using `read.csv()`, `readr::read_csv()`, or other functions that can import rectangular data.
 The `points2comm()` function of the `phyloregion` package may be used to convert raw occurrence data (e.g., latitude and longitude of species occurrences) to a community matrix [@Daru2020a].
 
@@ -142,6 +142,7 @@ The `points2comm()` function of the `phyloregion` package may be used to convert
 
 The `ape` R package is used to handle phylogenies, which are stored as lists of the class `phylo`.
 Phylogenies should have no negative branch lengths, but are not required to be fully bifurcating.
+Either a phylogram or chronogram may be used.
 Phylogenies can be loaded with the `ape::read.tree()` function.
 
 # Analysis workflow
@@ -151,10 +152,10 @@ However, internally this entails several steps that the user should be aware of 
 
 ## Calculate observed values
 
-First, the input phylogeny is scaled to a total length of 1 and observed phylogenetic diversity (`pd_obs`) and phylogenetic endemism (`pe_obs`) are calculated.
-Next, an alternative phylogeny (also referred to as the "comparison tree") is constructed that has non-zero branch lengths set to a constant value, then rescaled to a total length of 1.
+First, the input phylogeny is scaled to a total length of 1 and observed phylogenetic diversity (`pd_obs`) and phylogenetic endemism (`pe_obs`) are calculated (Box 1).
+Next, an alternative phylogeny (also referred to as the "comparison tree") is constructed that has non-zero branch lengths set to a constant value (canaper arbitrarily uses 1), then rescaled to a total length of 1.
 PD and PE are then calculated on the alternative phylogeny (`pd_alt`, `pe_alt`).
-Relative PD and PE, the ratio of `pd_obs` to `pd_alt` and `pe_obs` to `pe_alt` respectively, are then calculated (RPD, RPE).
+Relative PD and PE, the ratio of `pd_obs` to `pd_alt` and `pe_obs` to `pe_alt` respectively, are then calculated (RPD, RPE; Box 1).
 However, the statistical significance of any of these metrics cannot be determined from observed values alone.
 
 ## Generate random communities
@@ -168,6 +169,7 @@ As there is no single "correct" algorithm, we have opted to provide the user wit
 `vegan` includes \>30 randomization algorithms, but not all are appropriate for CANAPE.
 Recommended algorithms include `swap` [@Gotelli2003] and `curveball` [@Strona2014].
 These algorithms preserve the number of sites occupied by each species and the richness of each site, and both produce results comparable to one commonly used randomization algorithm in Biodiverse called `rand_structured` (see "Example: Australian *Acacia*").
+`curveball` has been shown to be more computationally efficient than `swap` as implemented in the `picante` package [@Strona2014], but we are unaware of any studies comparing the effects on PD or CANAPE between the two.
 
 We have also provided a method for users to provide a custom, user-defined randomization algorithm using the `vegan` framework.
 This may be appropriate if, for example, the community matrix includes a very wide area and it is desired to restrict randomizations to subsets of the area.
@@ -498,6 +500,7 @@ First, the null model used between the Biodiverse and `canaper` analyses differ 
 `rand_structured` is not currently available in R, but we hope to add this to a future version of `canaper`.
 Second, the random communities generated in each run will be different, so the exact *p*-values will also be different.
 With a sufficiently high number of random communities, significance (e.g., at the $\alpha = 0.5$ level) is expected to converge, but there may be borderline cases that appear significant in some analyses and non-significant in others.
+(We have verified that calculation of deterministic metrics that do not rely on random values, e.g., raw PD, are identical between Biodiverse and `canaper`, and include a test for this in `canaper`).
 
 When we compared endemism type between the `canaper` and Biodiverse CANAPE results for Australian *Acacia*, they agreed in `r p_agree` of grid-cells (@tbl-cpr-biod).
 The total number of significant cells was very similar (*n* = `r sig_tally$canaper$significant$n_sites` and `r sig_tally$biodiverse$significant$n_sites` sites, `canaper` and Biodiverse, respectively).
@@ -527,10 +530,10 @@ This demonstrates that `canaper` can efficiently compute moderately sized datase
 We are not aware of any other R packages that conduct the entire CANAPE pipeline automatically.
 However, there is a large number of packages for analyzing species diversity [approximately 40 packages out of 15,300 as of 2019\; @Pavoine2020].
 Some of those that are more closely related to `canaper` include the following.
-`picante` [@Kembel2010] was one of the first packages to offer calculation of phylogenetic alpha diversity such as MPD, MNTD, and PD [@Webb2000].
+`picante` [@Kembel2010] was one of the first packages to offer calculation of phylogenetic alpha diversity such as MPD, MNTD, and PD [@Webb2000] and supports seven randomization algorithms, including two variations of the `swap` algorithm [@Gotelli2003; @Miklos2004].
 `phyloregion` [@Daru2020a] implements sparse matrix encoding to increase computing efficiency of PD, and is used by `canaper`.
 `vegan` [@Oksanen2017] performs a wide range of non-phylogenetic community ecology analyses.
-`vegan` includes by far the greatest number of algorithms for generating random communities and is used by `canaper`.
+`vegan` includes by far the greatest number of algorithms for generating random communities, including `curveball` [@Strona2014] and both variations of `swap`, and is used by `canaper`.
 `adiv` [@Pavoine2020] provides a flexible framework for analyzing alpha and beta diversity of biological communities based on either phylogenetic or trait distances.
 `PhyloMeasures` [@Tsirogiannis2016] implements efficient routines for calculating phylogenetic diversity metrics.
 `EcoSimR` [@Gotelli2013a] provides randomization algorithms as well as functions for characterizing community matrices and null distributions.
