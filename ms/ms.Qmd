@@ -357,7 +357,7 @@ Each is a list with two named elements, `comm` (community matrix, data frame) an
 ## Analysis with `canaper`
 
 To demonstrate usage with a real dataset, we reproduced the analysis of @Mishler2014, who conducted CANAPE on Australian *Acacia* using Biodiverse.
-All `canaper` analyses were run with `canaper` v`r packageVersion("canaper")` in R v`r R.Version()$major`.`r R.Version()$minor`.
+All `canaper` analyses were run with `canaper` v`r packageVersion("canaper")` in R v4.2.1.
 We used the `curveball` randomization algorithm with 50,000 iterations, since `cpr_iter_sim()` indicated this was sufficient to randomize the matrix (see "Major Functions").
 Once the randomization algorithm and its settings have been selected, CANAPE can be conducted with just two commands.
 
@@ -406,6 +406,8 @@ library(tidyverse) # includes ggplot2, other packages for data tidying
 acacia_canape <- acacia_canape |>
   separate(site, c("long", "lat"), sep = ":") |>
   mutate(across(c(long, lat), parse_number))
+min_long <- min(acacia_canape$long)
+min_lat <- min(acacia_canape$lat)
 
 a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
   geom_tile() +
@@ -416,10 +418,26 @@ a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
     fill = guide_legend(title.position = "top", label.position = "bottom")
   ) +
   coord_fixed() +
+  # add a 1000 km scalebar (data units are in m)
+  geom_segment(
+    x = min_long,
+    y = min_lat,
+    xend = min_long + 1000 * 1000,
+    yend = min_lat
+  ) +
+  geom_text(
+    x = min_long,
+    y = min_lat,
+    label = "1,000 km",
+    vjust = -1, hjust = 0, size = 2
+  ) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    panel.grid.minor = element_blank()
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
   )
 
 b <- ggplot(
@@ -547,8 +565,7 @@ As of writing, `PhyloMeasures` and `EcoSimR` had been removed from CRAN and may 
 The `canaper` package enables CANAPE completely within R for the first time.
 This will simplify workflows and facilitate reproducibility for researchers studying spatial biodiversity with R.
 Furthermore, `canaper` features efficient computing routines and simple yet flexible implementation of parallel computing, thereby decreasing computation time.
-<!-- FIXME: Add new studies -->
-`canaper` has already been used at least three studies while in development [@Ellepola2022; @Lu2022; @Nitta2022a].
+`canaper` has already been used at least five studies while in development [@Ellepola2022; @Lu2022; @Nitta2022a; @Naranjo2023; @vanGalen2023].
 We expect `canaper` will become a major tool in the toolkit of the emerging field of spatial phylogenetics alongside Biodiverse.
 
 # Acknowledgements
@@ -576,9 +593,10 @@ Code and data used to conduct analyses and generate this manuscript are availabl
 
 The `acacia` dataset was originally published by @Mishler2014.
 
-To cite canaper or acknowledge its use, cite this Software note as follows, substituting the version of the application that you used for 'version 1.0.0':
+To cite canaper or acknowledge its use, cite this Software note as follows, substituting the version of the application that you used for 'version 0':
 
-Nitta, J. H. et al. 2023. canaper: Categorical analysis of neo- and paleo-endemism in R. FIXME: ADD REFERENCE DETAILS HERE (version 1.0.0)
+<!-- FIXME: update journal details when available -->
+Nitta, J. H. et al. 2023. canaper: Categorical analysis of neo- and paleo-endemism in R. Ecography XX: XXX--XXX (version 0)
 
 # References
 
@@ -599,7 +617,7 @@ For details on functions, see "Major Functions".
 
 **@fig-acacia-cpr.** Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*.
 (a) Map of Australia showing grid-cells (communities) colored by endemism type.
-Latitude and longitude projected into equal area Australian Albers (EPSG:3577) coordinate system [@Butler2007]; units in m.
+Latitude and longitude projected into equal area Australian Albers (EPSG:3577) coordinate system [@Butler2007].
 (b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type. This figure reproduces Figure 3 of @Mishler2014.
 
 {{< pagebreak >}}
@@ -683,19 +701,38 @@ acacia_canape <- acacia_canape |>
   separate(site, c("long", "lat"), sep = ":") |>
   mutate(across(c(long, lat), parse_number))
 
+min_long <- min(acacia_canape$long)
+min_lat <- min(acacia_canape$lat)
+
 a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
   geom_tile() +
-  # use same colors as Misher et al. 2014
-  # (for CVD-safe colors could use cpr_endem_cols or cpr_endem_cols_2)
+  # Use same colors as Misher et al. 2014
+  # (for CVD-safe colors see cpr_endem_cols)
   scale_fill_manual(values = mishler_endem_cols) +
   guides(
     fill = guide_legend(title.position = "top", label.position = "bottom")
   ) +
   coord_fixed() +
+  # add a 1000 km scalebar
+  geom_segment(
+    x = min_long,
+    y = min_lat,
+    xend = min_long + 1000 * 1000,
+    yend = min_lat
+  ) +
+  geom_text(
+    x = min_long,
+    y = min_lat,
+    label = "1,000 km",
+    vjust = -1, hjust = 0, size = 2
+  ) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    panel.grid.minor = element_blank()
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
   )
 
 b <- ggplot(

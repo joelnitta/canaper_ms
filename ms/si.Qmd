@@ -94,6 +94,9 @@ acacia_canape <-
   separate(site, c("long", "lat"), sep = ":") |>
   mutate(across(c(long, lat), parse_number))
 
+min_long <- min(acacia_canape$long)
+min_lat <- min(acacia_canape$lat)
+
 a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
   geom_tile() +
   scale_fill_manual(values = cpr_endem_cols_4) +
@@ -101,12 +104,28 @@ a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
     fill = guide_legend(title.position = "top", label.position = "bottom")
   ) +
   coord_fixed() +
+  # add a 1000 km scalebar (data units are in m)
+  geom_segment(
+    x = min_long,
+    y = min_lat,
+    xend = min_long + 1000 * 1000,
+    yend = min_lat
+  ) +
+  geom_text(
+    x = min_long,
+    y = min_lat,
+    label = "1,000 km",
+    vjust = -1, hjust = 0, size = 2
+  ) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
     panel.background = element_rect(fill = "white", color = "white"),
     panel.grid.major = element_line(color = "grey60"),
-    panel.grid.minor = element_blank()
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
   )
 
 b <- ggplot(
@@ -128,7 +147,7 @@ a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 
 **Fig. S2**: Categorical analysis of neo- and paleo-endemism (CANAPE) of Australian *Acacia*, plotted with color vision deficiency (CVD)-safe colors (`cpr_endem_cols_4` palette in `canaper`).
 (a) Map of Australia showing grid-cells (communities) colored by endemism type.
-Latitude and longitude projected into equal area Australian Albers (EPSG:3577) coordinate system; units in m.
+Latitude and longitude projected into equal area Australian Albers (EPSG:3577) coordinate system.
 (b) Scatterplot of comparing phylogenetic endemism (PE) of each community as measured on the original tree vs. a comparison tree with all non-zero branch lengths set to equal length, colored according to endemism type.
 
 {{< pagebreak >}}

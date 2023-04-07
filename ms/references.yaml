@@ -351,9 +351,9 @@ references:
   URL: https://linkinghub.elsevier.com/retrieve/pii/S2667325822003491
 - id: Miklos2004
   accessed:
-  - year: 2020
-    month: 7
-    day: 21
+  - year: 2022
+    month: 9
+    day: 29
   author:
   - family: Miklós
     given: I.
@@ -363,18 +363,18 @@ references:
   container-title: Ecology
   container-title-short: Ecology
   DOI: 10.1890/03-0101
-  ISSN: 1939-9170
+  ISSN: 0012-9658
   issue: '1'
   issued:
   - year: 2004
+    month: 1
   language: en
-  note: '_eprint: https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1890/03-0101'
   page: 86-92
-  source: Wiley Online Library
+  source: DOI.org (Crossref)
   title: 'Randomization of presence–absence matrices: Comments and new algorithms'
-  title-short: Randomization of Presence–Absence Matrices
+  title-short: RANDOMIZATION OF PRESENCE–ABSENCE MATRICES
   type: article-journal
-  URL: https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/03-0101
+  URL: http://doi.wiley.com/10.1890/03-0101
   volume: '85'
 - id: Mishler2014
   author:
@@ -441,6 +441,39 @@ references:
   type: article-journal
   URL: https://onlinelibrary.wiley.com/doi/10.1111/jse.12590
   volume: '58'
+- id: Naranjo2023
+  accessed:
+  - year: 2023
+    month: 3
+    day: 29
+  author:
+  - family: Naranjo
+    given: Andre A.
+  - family: Folk
+    given: Ryan A.
+  - family: Gitzendanner
+    given: Matthew A.
+  - family: Soltis
+    given: Douglas E.
+  - family: Soltis
+    given: Pamela S.
+  citation-key: Naranjo2023
+  container-title: Journal of Biogeography
+  container-title-short: Journal of Biogeography
+  DOI: 10.1111/jbi.14541
+  ISSN: 0305-0270, 1365-2699
+  issue: '2'
+  issued:
+  - year: 2023
+    month: 2
+  language: en
+  page: 393-405
+  source: DOI.org (Crossref)
+  title: Ancestral area analyses reveal Pleistocene‐influenced evolution in a clade
+    of coastal plain endemic plants
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/jbi.14541
+  volume: '50'
 - id: Nitta2022a
   accessed:
   - year: 2022
@@ -667,7 +700,7 @@ references:
   issue: '1'
   issued:
   - year: 2017
-  page: 1-18
+  page: '96'
   PMID: '28450227'
   title: Spatial phylogenetics of the native California flora
   type: article-journal
@@ -691,6 +724,41 @@ references:
     and their statistical moments'
   type: article-journal
   volume: '39'
+- id: vanGalen2023
+  accessed:
+  - year: 2023
+    month: 3
+    day: 29
+  author:
+  - family: Galen
+    given: Laura G.
+    non-dropping-particle: van
+  - family: Orlovich
+    given: David A.
+  - family: Lord
+    given: Janice M.
+  - family: Nilsen
+    given: Andy R.
+  - family: Dutoit
+    given: Ludovic
+  - family: Larcombe
+    given: Matthew J.
+  citation-key: vanGalen2023
+  container-title: New Phytologist
+  container-title-short: New Phytologist
+  DOI: 10.1111/nph.18802
+  ISSN: 0028-646X, 1469-8137
+  issue: '3'
+  issued:
+  - year: 2023
+    month: 5
+  language: en
+  page: 1215-1229
+  source: DOI.org (Crossref)
+  title: Correlated evolution in an ectomycorrhizal host–symbiont system
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/nph.18802
+  volume: '238'
 - id: Webb2000
   author:
   - family: Webb
