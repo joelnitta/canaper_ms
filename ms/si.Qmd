@@ -8,7 +8,7 @@ subtitle: "Supporting information"
 #   - Brent D. Mishler
 #   - Wataru Iwasaki
 bibliography: references.yaml
-csl: methods-in-ecology-and-evolution.csl
+csl: oikos.csl
 highlight-style: github
 format:
   pdf:

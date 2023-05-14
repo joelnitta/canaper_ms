@@ -1,7 +1,7 @@
 ---
 title: "canaper: Categorical analysis of neo- and paleo-endemism in R"
 bibliography: references.yaml
-csl: ecography.csl
+csl: oikos.csl
 highlight-style: github
 crossref: 
   fig-title: Fig.

@@ -74,7 +74,7 @@ tar_plan(
     ms,
     "ms/ms.Qmd",
     extra_files = c(
-      "ms/methods-in-ecology-and-evolution.csl",
+      "ms/oikos.csl",
       "ms/references.yaml",
       "ms/custom-reference.docx"
     ),
@@ -85,7 +85,7 @@ tar_plan(
     si,
     "ms/si.Qmd",
     extra_files = c(
-      "ms/methods-in-ecology-and-evolution.csl",
+      "ms/oikos.csl",
       "ms/references.yaml"
     ),
     quiet = FALSE
